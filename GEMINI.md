@@ -1,25 +1,40 @@
 # Sugnu Hotel Management System
 
-A comprehensive hotel management solution featuring a robust Laravel-based backend for managing rooms, reservations, payments, and user roles.
+A comprehensive hotel management solution featuring a robust Laravel-based backend for managing rooms, reservations, payments, and user roles, and an Angular-based frontend.
 
 ## Project Structure
 
 - `backend/`: Laravel 12 API providing the core business logic, database management, and authentication services.
+- `frontend/`: Angular application serving as the client-side interface.
 
 ## Getting Started
 
-To get started with the project, please refer to the documentation within the `backend/` directory:
+### Prerequisites
 
-1.  **Backend Setup:** See [backend/GEMINI.md](backend/GEMINI.md) for instructions on setting up the PHP/Laravel environment.
+- PHP 8.2+
+- Composer
+- Node.js & NPM
+- SQLite (for development)
 
-## Main Technologies
+### Backend Setup (Laravel)
 
-- **Backend:** Laravel 12 (PHP 8.2), Sanctum, Spatie Permissions.
-- **Database:** SQLite (Development), PostgreSQL/MySQL (Production ready).
-- **Frontend:** Integrated Vite/Tailwind for basic administration; designed to be consumed by external clients.
+1.  **Navigate to backend:** `cd backend`
+2.  **Install dependencies:** `composer install && npm install`
+3.  **Environment:** `cp .env.example .env` then `php artisan key:generate`
+4.  **Database:** `touch database/database.sqlite` then `php artisan migrate --seed`
+5.  **Run:** `php artisan serve`
 
-## Development Workflow
+### Frontend Setup (Angular)
 
-1.  **Environment:** Ensure PHP 8.2+, Composer, and Node.js are installed.
-2.  **API First:** The project is designed with an API-first approach, using Sanctum for secure token-based authentication.
-3.  **Roles:** Supports multiple user roles (Admin, Receptionist, Client) with specific permissions.
+1.  **Navigate to frontend:** `cd frontend`
+2.  **Install dependencies:** `npm install`
+3.  **Run:** `ng serve`
+
+## Development Conventions
+
+- **Code Style:** Laravel follows PSR-12 (use `./vendor/bin/pint`). Angular follows Angular style guide.
+- **API:** RESTful API with Laravel Sanctum for authentication.
+- **Testing:** Backend uses PHPUnit; Frontend uses Vitest.
+
+---
+*This file serves as instructional context for Gemini CLI.*

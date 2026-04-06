@@ -52,26 +52,33 @@ class RoomController extends Controller
     public function available(Request $request)
     {
         $request->validate([
-            'check_in_date'    => 'required|date|after:today',
-            'check_out_date'   => 'required|date|after:check_in_date',
-            'number_of_adults' => 'required|integer|min:1',
+            'check_in_date'    => 'nullable|date|after:today',
+            'check_out_date'   => 'nullable|date|after:check_in_date',
+            'number_of_adults' => 'nullable|integer|min:1',
         ]);
 
-        $reservedRoomIds = Reservation::where('status', '!=', 'cancelled')
-            ->where(function ($query) use ($request) {
-                $query->whereBetween('check_in_date', [$request->check_in_date, $request->check_out_date])
-                    ->orWhereBetween('check_out_date', [$request->check_in_date, $request->check_out_date])
-                    ->orWhere(function ($query) use ($request) {
-                        $query->where('check_in_date', '<=', $request->check_in_date)
-                                ->where('check_out_date', '>=', $request->check_out_date);
-                    });
-            })->pluck('room_id');
+        $query = Room::with(['roomType', 'images', 'amenities'])
+            ->where('status', 'available');
 
-        $rooms = Room::with(['roomType', 'images', 'amenities'])
-            ->whereNotIn('id', $reservedRoomIds)
-            ->where('status', 'available')
-            ->where('max_occupancy', '>=', $request->number_of_adults + ($request->number_of_children ?? 0))
-            ->get();
+        if ($request->check_in_date && $request->check_out_date) {
+            $reservedRoomIds = Reservation::where('status', '!=', 'cancelled')
+                ->where(function ($query) use ($request) {
+                    $query->whereBetween('check_in_date', [$request->check_in_date, $request->check_out_date])
+                        ->orWhereBetween('check_out_date', [$request->check_in_date, $request->check_out_date])
+                        ->orWhere(function ($query) use ($request) {
+                            $query->where('check_in_date', '<=', $request->check_in_date)
+                                    ->where('check_out_date', '>=', $request->check_out_date);
+                        });
+                })->pluck('room_id');
+
+            $query->whereNotIn('id', $reservedRoomIds);
+        }
+
+        if ($request->number_of_adults) {
+            $query->where('max_occupancy', '>=', $request->number_of_adults + ($request->number_of_children ?? 0));
+        }
+
+        $rooms = $query->get();
 
         return response()->json($rooms);
     }
