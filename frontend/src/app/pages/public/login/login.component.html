@@ -16,7 +16,7 @@
         </div>
         <div *ngIf="error" class="p-3 bg-red-100 text-red-700 rounded-lg text-sm">{{ error }}</div>
         <button type="submit" [disabled]="!loginForm.form.valid" 
-                class="w-full bg-green-800 text-white py-3 rounded-lg font-bold hover:bg-green-900 transition duration-300">
+                class="cursor-pointer w-full bg-green-800 text-white py-3 rounded-lg font-bold hover:bg-green-900 transition duration-300">
           Se connecter
         </button>
       </form>
