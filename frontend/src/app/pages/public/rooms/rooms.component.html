@@ -1,7 +1,7 @@
 <div class="min-h-screen flex flex-col">
   <app-navbar></app-navbar>
 
-  <main class="flex-grow bg-gray-50 py-12">
+  <main class="grow bg-gray-50 py-12">
     <div class="max-w-7xl mx-auto px-4">
       <h1 class="text-4xl font-bold text-green-900 mb-8">Nos Chambres Disponibles</h1>
 
@@ -29,13 +29,13 @@
             <div class="space-y-4">
               <div>
                 <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Arrivée</label>
-                <input type="date" [(ngModel)]="filters.check_in_date" 
-                       class="w-full border-gray-300 rounded-lg focus:ring-green-800 focus:border-green-800 shadow-sm">
+                <input type="date" [(ngModel)]="filters.check_in_date"
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
               </div>
               <div>
                 <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Départ</label>
-                <input type="date" [(ngModel)]="filters.check_out_date" 
-                       class="w-full border-gray-300 rounded-lg focus:ring-green-800 focus:border-green-800 shadow-sm">
+                <input type="date" [(ngModel)]="filters.check_out_date"
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
               </div>
               <div>
                 <button (click)="loadRooms()" 

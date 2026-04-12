@@ -7,47 +7,7 @@ import { AuthService } from '../../core/services/auth.service';
   selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  template: `
-    <nav class="bg-green-800 text-white shadow-lg">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-          <div class="flex items-center">
-            <a routerLink="/" class="flex-shrink-0 flex items-center">
-              <span class="text-2xl font-bold text-orange-400">SugnuHotel</span>
-            </a>
-            <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <a routerLink="/" class="inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-orange-400">Accueil</a>
-              <a routerLink="/rooms" class="inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-orange-400">Chambres</a>
-            </div>
-          </div>
-          <div class="flex items-center">
-            <ng-container *ngIf="authService.currentUser(); else guestLinks">
-              <div class="hidden sm:ml-6 sm:flex sm:space-x-4 items-center">
-                <span class="text-sm font-medium">Bonjour, {{ authService.currentUser()?.name }}</span>
-                
-                <!-- Client Links -->
-                <a *ngIf="authService.hasRole('client')" routerLink="/client/dashboard" class="text-sm font-medium hover:text-orange-400">Mon Espace</a>
-                
-                <!-- Receptionist Links -->
-                <a *ngIf="authService.hasRole('receptionist')" routerLink="/receptionist/dashboard" class="text-sm font-medium hover:text-orange-400">Réception</a>
-                
-                <!-- Admin Links -->
-                <a *ngIf="authService.hasRole('admin')" routerLink="/admin/dashboard" class="text-sm font-medium hover:text-orange-400">Administration</a>
-                
-                <button (click)="authService.logout()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-300">Déconnexion</button>
-              </div>
-            </ng-container>
-            <ng-template #guestLinks>
-              <div class="flex space-x-4">
-                <a routerLink="/login" class="inline-flex items-center px-4 py-2 text-sm font-medium hover:text-orange-400">Connexion</a>
-                <a routerLink="/register" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-300">S'inscrire</a>
-              </div>
-            </ng-template>
-          </div>
-        </div>
-      </div>
-    </nav>
-  `
+  templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
   authService = inject(AuthService);

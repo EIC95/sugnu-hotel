@@ -1,0 +1,55 @@
+<div class="min-h-screen flex flex-col bg-gray-50">
+      <app-navbar></app-navbar>
+
+      <main class="flex-grow py-12">
+        <div class="max-w-7xl mx-auto px-4">
+          <h1 class="text-3xl font-bold text-green-900 mb-8">Administration Générale</h1>
+
+          <!-- Advanced Stats -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-green-800">
+              <h3 class="text-gray-400 text-xs font-bold uppercase mb-2">Revenu Total</h3>
+              <p class="text-4xl font-bold text-green-900">{{ stats?.total_revenue || 0 }}€</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-orange-500">
+              <h3 class="text-gray-400 text-xs font-bold uppercase mb-2">Taux d'occupation</h3>
+              <p class="text-4xl font-bold text-green-900">{{ stats?.occupancy_rate || 0 }}%</p>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-blue-500">
+              <h3 class="text-gray-400 text-xs font-bold uppercase mb-2">Chambres Totales</h3>
+              <p class="text-4xl font-bold text-green-900">{{ stats?.total_rooms || 0 }}</p>
+            </div>
+          </div>
+
+          <!-- Quick Navigation Cards -->
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <a routerLink="/admin/rooms" class="bg-white p-6 rounded-xl shadow hover:shadow-md transition text-center group">
+              <div class="text-2xl mb-2 group-hover:scale-110 transition">🛏️</div>
+              <span class="text-xs font-bold text-gray-600 uppercase">Chambres</span>
+            </a>
+            <a routerLink="/admin/room-types" class="bg-white p-6 rounded-xl shadow hover:shadow-md transition text-center group">
+              <div class="text-2xl mb-2 group-hover:scale-110 transition">🏷️</div>
+              <span class="text-xs font-bold text-gray-600 uppercase">Types</span>
+            </a>
+            <a routerLink="/admin/services" class="bg-white p-6 rounded-xl shadow hover:shadow-md transition text-center group">
+              <div class="text-2xl mb-2 group-hover:scale-110 transition">🍳</div>
+              <span class="text-xs font-bold text-gray-600 uppercase">Services</span>
+            </a>
+            <a routerLink="/admin/promotions" class="bg-white p-6 rounded-xl shadow hover:shadow-md transition text-center group">
+              <div class="text-2xl mb-2 group-hover:scale-110 transition">🎁</div>
+              <span class="text-xs font-bold text-gray-600 uppercase">Promos</span>
+            </a>
+            <a routerLink="/admin/receptionists" class="bg-white p-6 rounded-xl shadow hover:shadow-md transition text-center group">
+              <div class="text-2xl mb-2 group-hover:scale-110 transition">👤</div>
+              <span class="text-xs font-bold text-gray-600 uppercase">Staff</span>
+            </a>
+            <a routerLink="/receptionist/reservations" class="bg-white p-6 rounded-xl shadow hover:shadow-md transition text-center group">
+              <div class="text-2xl mb-2 group-hover:scale-110 transition">📅</div>
+              <span class="text-xs font-bold text-gray-600 uppercase">Planning</span>
+            </a>
+          </div>
+        </div>
+      </main>
+
+      <app-footer></app-footer>
+    </div>
