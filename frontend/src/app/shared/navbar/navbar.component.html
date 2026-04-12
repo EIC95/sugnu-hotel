@@ -2,7 +2,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
           <div class="flex items-center">
-            <a routerLink="/" class="flex-shrink-0 flex items-center">
+            <a routerLink="/" class="shrink-0 flex items-center">
               <span class="text-2xl font-bold text-orange-400">SugnuHotel</span>
             </a>
             <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -24,7 +24,7 @@
                 <!-- Admin Links -->
                 <a *ngIf="authService.hasRole('admin')" routerLink="/admin/dashboard" class="text-sm font-medium hover:text-orange-400">Administration</a>
                 
-                <button (click)="authService.logout()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-300">Déconnexion</button>
+                <button (click)="authService.logout()" class="cursor-pointer bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-300">Déconnexion</button>
               </div>
             </ng-container>
             <ng-template #guestLinks>

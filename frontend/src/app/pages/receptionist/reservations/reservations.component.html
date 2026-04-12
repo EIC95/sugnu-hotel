@@ -48,8 +48,8 @@
                       </span>
                     </td>
                     <td class="px-6 py-4 space-x-2">
-                      <button *ngIf="res.status === 'confirmed'" (click)="checkIn(res.id)" class="text-green-700 bg-green-50 px-2 py-1 rounded font-bold text-xs hover:bg-green-100 transition">Check-In</button>
-                      <button *ngIf="res.status === 'checked_in'" (click)="checkOut(res.id)" class="text-orange-700 bg-orange-50 px-2 py-1 rounded font-bold text-xs hover:bg-orange-100 transition">Check-Out</button>
+                      <button *ngIf="res.status === 'confirmed'" (click)="checkIn(res.id)" class="cursor-pointer text-green-700 bg-green-50 px-2 py-1 rounded font-bold text-xs hover:bg-green-100 transition">Check-In</button>
+                      <button *ngIf="res.status === 'checked_in'" (click)="checkOut(res.id)" class="cursor-pointer text-orange-700 bg-orange-50 px-2 py-1 rounded font-bold text-xs hover:bg-orange-100 transition">Check-Out</button>
                     </td>
                   </tr>
                 </tbody>

@@ -40,7 +40,7 @@
 
                   <div *ngIf="error" class="p-4 bg-red-100 text-red-700 rounded-lg">{{ error }}</div>
 
-                  <button type="submit" [disabled]="!bookForm.form.valid || loading" class="w-full bg-green-800 text-white py-4 rounded-xl font-bold text-lg hover:bg-green-900 shadow-lg transition duration-300 disabled:opacity-50">
+                  <button type="submit" [disabled]="!bookForm.form.valid || loading" class="cursor-pointer w-full bg-green-800 text-white py-4 rounded-xl font-bold text-lg hover:bg-green-900 shadow-lg transition duration-300 disabled:opacity-50">
                     {{ loading ? 'Traitement...' : 'Confirmer la réservation' }}
                   </button>
                 </form>

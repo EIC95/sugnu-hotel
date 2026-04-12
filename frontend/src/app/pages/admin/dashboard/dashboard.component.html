@@ -1,7 +1,7 @@
 <div class="min-h-screen flex flex-col bg-gray-50">
       <app-navbar></app-navbar>
 
-      <main class="flex-grow py-12">
+      <main class="grow py-12">
         <div class="max-w-7xl mx-auto px-4">
           <h1 class="text-3xl font-bold text-green-900 mb-8">Administration Générale</h1>
 
@@ -13,7 +13,7 @@
             </div>
             <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-orange-500">
               <h3 class="text-gray-400 text-xs font-bold uppercase mb-2">Taux d'occupation</h3>
-              <p class="text-4xl font-bold text-green-900">{{ stats?.occupancy_rate || 0 }}%</p>
+              <p class="text-4xl font-bold text-green-900">{{ stats?.occupancy_rate || 0 }}</p>
             </div>
             <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-blue-500">
               <h3 class="text-gray-400 text-xs font-bold uppercase mb-2">Chambres Totales</h3>

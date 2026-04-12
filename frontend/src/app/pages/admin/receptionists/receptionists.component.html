@@ -5,7 +5,7 @@
         <div class="max-w-7xl mx-auto px-4">
           <div class="flex justify-between items-center mb-8">
             <h1 class="text-3xl font-bold text-green-900">Gestion du Staff</h1>
-            <button (click)="showForm = !showForm" class="bg-green-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-900 transition">
+            <button (click)="showForm = !showForm" class="cursor-pointer bg-green-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-900 transition">
               {{ showForm ? 'Annuler' : 'Ajouter un réceptionniste' }}
             </button>
           </div>
@@ -30,7 +30,7 @@
                 <input type="password" [(ngModel)]="newData.password" name="password" required class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
               </div>
               <div class="col-span-2">
-                <button type="submit" [disabled]="!staffForm.form.valid" class="w-full bg-orange-500 text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">Créer le compte</button>
+                <button type="submit" [disabled]="!staffForm.form.valid" class="cursor-pointer w-full bg-orange-500 text-white py-3 rounded-lg font-bold hover:bg-orange-600 transition">Créer le compte</button>
               </div>
             </form>
           </div>
