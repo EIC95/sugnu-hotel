@@ -1,0 +1,41 @@
+<div class="min-h-screen flex flex-col bg-gray-50">
+      <app-navbar></app-navbar>
+
+      <main class="flex-grow py-12">
+        <div class="max-w-7xl mx-auto px-4">
+          <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-green-900">Gestion des Services</h1>
+            <button (click)="openAdd()" class="bg-green-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-900 transition">Ajouter</button>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <table class="w-full text-left">
+              <thead class="bg-gray-100 text-xs font-bold text-gray-500 uppercase">
+                <tr>
+                  <th class="px-6 py-4">Service</th>
+                  <th class="px-6 py-4">Prix</th>
+                  <th class="px-6 py-4">Statut</th>
+                  <th class="px-6 py-4">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr *ngFor="let s of services" class="hover:bg-gray-50">
+                  <td class="px-6 py-4 font-bold">{{ s.name }}</td>
+                  <td class="px-6 py-4 font-bold text-green-800">{{ s.price }}€</td>
+                  <td class="px-6 py-4">
+                    <span [class]="'px-2 py-1 rounded text-[10px] font-bold ' + (s.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700')">
+                      {{ s.is_active ? 'Actif' : 'Inactif' }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 space-x-2">
+                    <button (click)="deleteService(s.id)" class="text-red-600 hover:underline">Supprimer</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+      <app-footer></app-footer>
+    </div>

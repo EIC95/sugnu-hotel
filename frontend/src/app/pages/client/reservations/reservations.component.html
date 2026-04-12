@@ -1,0 +1,64 @@
+<div class="min-h-screen flex flex-col bg-gray-50">
+      <app-navbar></app-navbar>
+
+      <main class="flex-grow py-12">
+        <div class="max-w-7xl mx-auto px-4">
+          <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-green-900">Mes Réservations</h1>
+            <a routerLink="/rooms" class="bg-green-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-900 transition shadow-md">Nouvelle Réservation</a>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-100 text-xs font-bold text-gray-500 uppercase border-b border-gray-200">
+                  <tr>
+                    <th class="px-6 py-4">Numéro</th>
+                    <th class="px-6 py-4">Chambre</th>
+                    <th class="px-6 py-4">Période</th>
+                    <th class="px-6 py-4">Voyageurs</th>
+                    <th class="px-6 py-4">Prix Total</th>
+                    <th class="px-6 py-4">Statut</th>
+                    <th class="px-6 py-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  <tr *ngFor="let res of reservations" class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4 font-bold text-green-900">{{ res.reservation_number }}</td>
+                    <td class="px-6 py-4">
+                      <div class="font-medium text-gray-900">{{ res.room.room_type.name }}</div>
+                      <div class="text-xs text-gray-500">Chambre #{{ res.room.room_number }}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-sm">Du {{ res.check_in_date }}</div>
+                      <div class="text-sm">Au {{ res.check_out_date }}</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-600">
+                      {{ res.number_of_adults + res.number_of_children }} pers.
+                    </td>
+                    <td class="px-6 py-4 font-bold text-orange-500">
+                      {{ res.total_price }}€
+                    </td>
+                    <td class="px-6 py-4">
+                      <span [class]="'px-3 py-1 rounded-full text-xs font-bold ' + getStatusClass(res.status)">
+                        {{ translateStatus(res.status) }}
+                      </span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <a [routerLink]="['/client/reservations', res.id]" class="text-green-800 hover:text-green-900 font-bold text-sm bg-green-50 px-3 py-1 rounded-md transition">Gérer</a>
+                    </td>
+                  </tr>
+                  <tr *ngIf="reservations.length === 0">
+                    <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                      Vous n'avez pas encore de réservations.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <app-footer></app-footer>
+    </div>
