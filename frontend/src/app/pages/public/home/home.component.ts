@@ -1,29 +1,32 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../../shared/navbar/navbar.component';
 import { FooterComponent } from '../../../shared/footer/footer.component';
+import { RoomCardComponent } from '../../../shared/room-card/room-card.component';
+import { RoomService } from '../../../core/services/room.service';
+import { Room } from '../../../core/models/room.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, NavbarComponent, FooterComponent],
+  imports: [CommonModule, FormsModule, RouterModule, NavbarComponent, FooterComponent, RoomCardComponent],
   template: `
     <div class="min-h-screen flex flex-col">
       <app-navbar></app-navbar>
 
-      <main class="flex-grow">
+      <main class="grow">
         <!-- Hero Section -->
-        <div class="relative h-[600px] flex items-center justify-center text-white">
+        <div class="relative h-150 flex items-center justify-center text-white">
           <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1920" alt="Hotel Hero" class="w-full h-full object-cover brightness-50">
           </div>
-          
+
           <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
             <h1 class="text-5xl md:text-6xl font-bold mb-6">Vivez une expérience inoubliable au SugnuHotel</h1>
             <p class="text-xl mb-8">Confort, luxe et hospitalité au cœur de la ville.</p>
-            
+
             <!-- Search Bar -->
             <div class="bg-white p-6 rounded-2xl shadow-2xl text-gray-900 max-w-3xl mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -56,14 +59,14 @@ import { FooterComponent } from '../../../shared/footer/footer.component';
         <section class="max-w-7xl mx-auto px-4 py-16">
           <div class="flex justify-between items-end mb-12">
             <div>
-              <h2 class="text-3xl font-bold text-green-900">Nos Chambres</h2>
+              <h2 class="text-3xl font-bold text-green-900">Chambres Disponibles</h2>
               <p class="text-gray-500">Découvrez nos espaces conçus pour votre bien-être.</p>
             </div>
             <a routerLink="/rooms" class="text-green-800 font-bold hover:underline">Voir tout →</a>
           </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Mocked for visualization if backend not ready -->
+
+          <!-- Loading skeleton -->
+          <div *ngIf="loading" class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div *ngFor="let i of [1,2,3]" class="bg-white rounded-xl shadow-lg overflow-hidden animate-pulse">
               <div class="h-48 bg-gray-200"></div>
               <div class="p-6">
@@ -73,6 +76,16 @@ import { FooterComponent } from '../../../shared/footer/footer.component';
               </div>
             </div>
           </div>
+
+          <!-- Available rooms -->
+          <div *ngIf="!loading && featuredRooms.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <app-room-card *ngFor="let room of featuredRooms" [room]="room"></app-room-card>
+          </div>
+
+          <!-- No rooms message -->
+          <div *ngIf="!loading && featuredRooms.length === 0" class="text-center py-12 text-gray-500">
+            <p class="text-lg">Aucune chambre disponible pour le moment.</p>
+          </div>
         </section>
       </main>
 
@@ -80,13 +93,30 @@ import { FooterComponent } from '../../../shared/footer/footer.component';
     </div>
   `
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   router = inject(Router);
+  roomService = inject(RoomService);
+
   searchData = {
     check_in_date: '',
     check_out_date: '',
     number_of_adults: '1'
   };
+
+  featuredRooms: Room[] = [];
+  loading = true;
+
+  ngOnInit() {
+    this.roomService.getAvailableRooms({}).subscribe({
+      next: (rooms) => {
+        this.featuredRooms = rooms.slice(0, 3);
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
+  }
 
   search() {
     this.router.navigate(['/rooms'], { queryParams: this.searchData });
