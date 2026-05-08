@@ -8,13 +8,13 @@
             <a routerLink="/rooms" class="bg-green-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-900 transition shadow-md">Nouvelle Réservation</a>
           </div>
 
-          <!-- Loading -->
+          
           <div *ngIf="loading" class="bg-white rounded-xl shadow-lg p-12 text-center">
             <div class="animate-spin w-8 h-8 border-4 border-green-800 border-t-transparent rounded-full mx-auto mb-4"></div>
             <p class="text-gray-500">Chargement de vos réservations...</p>
           </div>
 
-          <!-- Error -->
+          
           <div *ngIf="error" class="bg-red-50 border border-red-200 rounded-xl p-6 text-red-700">{{ error }}</div>
 
           <div *ngIf="!loading && !error" class="bg-white rounded-xl shadow-lg overflow-hidden">

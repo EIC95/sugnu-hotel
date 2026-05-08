@@ -5,7 +5,7 @@ import { receptionistGuard } from './core/guards/receptionist.guard';
 import { clientGuard } from './core/guards/client.guard';
 
 export const routes: Routes = [
-  // Public Routes
+  
   {
     path: '',
     loadComponent: () => import('./pages/public/home/home.component').then(m => m.HomeComponent)
@@ -27,7 +27,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/public/register/register.component').then(m => m.RegisterComponent)
   },
 
-  // Client Routes
+  
   {
     path: 'client',
     canActivate: [authGuard, clientGuard],
@@ -51,7 +51,7 @@ export const routes: Routes = [
     ]
   },
 
-  // Receptionist Routes
+  
   {
     path: 'receptionist',
     canActivate: [authGuard, receptionistGuard],
@@ -67,7 +67,7 @@ export const routes: Routes = [
     ]
   },
 
-  // Admin Routes
+  
   {
     path: 'admin',
     canActivate: [authGuard, adminGuard],

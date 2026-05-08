@@ -33,7 +33,7 @@ class PromotionController extends Controller
         return response()->json($promotion);
     }
 
-    // Vérifier un code promo
+    
     public function checkCode(Request $request)
     {
         $promotion = Promotion::where('code', $request->code)

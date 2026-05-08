@@ -24,7 +24,7 @@ export class RoomsComponent implements OnInit {
   saving = false;
   error = '';
 
-  // Amenity panel
+  
   showAmenities = false;
   amenityRoom: Room | null = null;
   newAmenity = '';
@@ -57,7 +57,7 @@ export class RoomsComponent implements OnInit {
   load() {
     this.roomService.getRooms().subscribe(data => {
       this.rooms = data;
-      // refresh amenity room if panel open
+      
       if (this.amenityRoom) {
         const updated = data.find(r => r.id === this.amenityRoom!.id);
         if (updated) this.amenityRoom = updated;

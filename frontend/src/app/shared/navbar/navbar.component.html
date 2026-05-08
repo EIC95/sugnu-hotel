@@ -16,13 +16,13 @@
               <div class="hidden sm:ml-6 sm:flex sm:space-x-4 items-center">
                 <span class="text-sm font-medium">Bonjour, {{ authService.currentUser()?.name }}</span>
                 
-                <!-- Client Links -->
+                
                 <a *ngIf="authService.hasRole('client')" routerLink="/client/dashboard" class="text-sm font-medium hover:text-orange-400">Mon Espace</a>
                 
-                <!-- Receptionist Links -->
+                
                 <a *ngIf="authService.hasRole('receptionist')" routerLink="/receptionist/dashboard" class="text-sm font-medium hover:text-orange-400">Réception</a>
                 
-                <!-- Admin Links -->
+                
                 <a *ngIf="authService.hasRole('admin')" routerLink="/admin/dashboard" class="text-sm font-medium hover:text-orange-400">Administration</a>
                 
                 <button (click)="authService.logout()" class="cursor-pointer bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-300">Déconnexion</button>
