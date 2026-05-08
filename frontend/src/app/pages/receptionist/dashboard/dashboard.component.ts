@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.dashService.getStats().subscribe(data => this.stats = data);
     this.resService.getReservations().subscribe(data => {
-      // Filter for confirmed (arrivals) or checked_in (departures) for quick view
+      
       this.recentReservations = data.filter(r => r.status === 'confirmed' || r.status === 'checked_in').slice(0, 10);
     });
   }

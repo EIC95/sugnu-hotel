@@ -32,7 +32,7 @@ export class BookingComponent implements OnInit {
   loading = false;
   error = '';
 
-  // Promo
+  
   promoCode = '';
   appliedPromotion: Promotion | null = null;
   promoError = '';

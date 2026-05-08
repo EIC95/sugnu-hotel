@@ -15,7 +15,7 @@ class HotelSeeder extends Seeder
 {
     public function run(): void
     {
-        // ── Promotion de bienvenue ────────────────────────────────────────────
+        
         Promotion::create([
             'code'          => 'WELCOME10',
             'description'   => 'Offre de bienvenue -10%',
@@ -26,7 +26,7 @@ class HotelSeeder extends Seeder
             'is_active'     => true,
         ]);
 
-        // ── Types de chambres ─────────────────────────────────────────────────
+        
         $standard = RoomType::create([
             'name'          => 'Standard',
             'description'   => 'Chambre standard confortable avec lit double, climatisation et salle de bain privative.',
@@ -55,20 +55,20 @@ class HotelSeeder extends Seeder
             'max_occupancy' => 6,
         ]);
 
-        // ── Chambres ──────────────────────────────────────────────────────────
+        
         $rooms = [
-            // Étage 1 — Standard
+            
             ['room_number' => '101', 'room_type_id' => $standard->id, 'floor' => 1, 'price_per_night' => 25000, 'max_occupancy' => 2],
             ['room_number' => '102', 'room_type_id' => $standard->id, 'floor' => 1, 'price_per_night' => 25000, 'max_occupancy' => 2],
             ['room_number' => '103', 'room_type_id' => $standard->id, 'floor' => 1, 'price_per_night' => 25000, 'max_occupancy' => 2],
             ['room_number' => '104', 'room_type_id' => $standard->id, 'floor' => 1, 'price_per_night' => 28000, 'max_occupancy' => 2],
-            // Étage 2 — Deluxe
+            
             ['room_number' => '201', 'room_type_id' => $deluxe->id,   'floor' => 2, 'price_per_night' => 45000, 'max_occupancy' => 3],
             ['room_number' => '202', 'room_type_id' => $deluxe->id,   'floor' => 2, 'price_per_night' => 45000, 'max_occupancy' => 3],
             ['room_number' => '203', 'room_type_id' => $deluxe->id,   'floor' => 2, 'price_per_night' => 48000, 'max_occupancy' => 3],
-            // Étage 2 — Familiale
+            
             ['room_number' => '204', 'room_type_id' => $family->id,   'floor' => 2, 'price_per_night' => 55000, 'max_occupancy' => 6],
-            // Étage 3 — Suite
+            
             ['room_number' => '301', 'room_type_id' => $suite->id,    'floor' => 3, 'price_per_night' => 85000, 'max_occupancy' => 4],
             ['room_number' => '302', 'room_type_id' => $suite->id,    'floor' => 3, 'price_per_night' => 95000, 'max_occupancy' => 4],
         ];
@@ -77,7 +77,7 @@ class HotelSeeder extends Seeder
             Room::create(array_merge($room, ['status' => 'available']));
         }
 
-        // ── Services ──────────────────────────────────────────────────────────
+        
         $services = [
             ['name' => 'Petit-déjeuner',     'description' => 'Buffet continental servi de 7h à 10h30.',          'price' => 5000,  'is_active' => true],
             ['name' => 'Déjeuner',           'description' => 'Repas complet au restaurant de l\'hôtel.',          'price' => 8000,  'is_active' => true],
@@ -95,7 +95,7 @@ class HotelSeeder extends Seeder
             Service::create($service);
         }
 
-        // ── Équipements par chambre ───────────────────────────────────────────
+        
         $amenitiesMap = [
             '101' => ['WiFi', 'Climatisation', 'TV'],
             '102' => ['WiFi', 'Climatisation', 'TV'],
@@ -118,7 +118,7 @@ class HotelSeeder extends Seeder
             }
         }
 
-        // ── Promotions ────────────────────────────────────────────────────────
+        
         $promotions = [
             [
                 'code'          => 'BIENVENUE10',
@@ -170,7 +170,7 @@ class HotelSeeder extends Seeder
             Promotion::create($promo);
         }
 
-        // ── Utilisateurs de test ──────────────────────────────────────────────
+        
         $client1 = User::create([
             'name'     => 'Aminata Diallo',
             'email'    => 'client@sugnuhotel.com',

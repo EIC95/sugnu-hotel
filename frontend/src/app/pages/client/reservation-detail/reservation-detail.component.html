@@ -28,7 +28,7 @@
 
             <div class="p-8">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <!-- Stay Info -->
+                
                 <div>
                   <h2 class="text-lg font-bold text-green-900 mb-4 border-b pb-2">Détails du séjour</h2>
                   <div class="space-y-4">
@@ -51,7 +51,7 @@
                   </div>
                 </div>
 
-                <!-- Room Image & Info -->
+                
                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
                   <h3 class="font-bold text-green-900 mb-2">Ma Chambre</h3>
                   <div class="h-48 rounded-lg overflow-hidden mb-4 shadow-sm group relative">
@@ -61,7 +61,7 @@
                     </div>
                   </div>
                   
-                  <!-- Amenities Section -->
+                  
                   <div *ngIf="reservation.room.amenities?.length">
                     <h4 class="text-[10px] uppercase font-bold text-gray-400 mb-2 tracking-wider">A%quipements inclus</h4>
                     <div class="flex flex-wrap gap-2">
@@ -76,7 +76,7 @@
                 </div>
               </div>
 
-              <!-- Price Breakdown -->
+              
               <div class="mt-8 bg-gray-50 p-6 rounded-xl border border-gray-100">
                   <h3 class="font-bold text-green-900 mb-4">Résumé financier</h3>
                   <div class="space-y-3 text-sm">
@@ -99,7 +99,7 @@
                   </div>
                 </div>
 
-              <!-- Services list -->
+              
               <div class="mt-8" *ngIf="reservation.services?.length">
                 <h2 class="text-lg font-bold text-green-900 mb-4 border-b pb-2">Services sAclActionnAs</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

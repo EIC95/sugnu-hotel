@@ -55,7 +55,7 @@ class ReservationController extends Controller
         $room = Room::findOrFail($request->room_id);
         $nights = now()->parse($request->check_in_date)->diffInDays($request->check_out_date);
         
-        // Calcul du sous-total (chambre + services)
+        
         $subtotal_room = $room->price_per_night * $nights;
         $subtotal_services = 0;
         
@@ -77,7 +77,7 @@ class ReservationController extends Controller
         $total = $subtotal_room + $subtotal_services;
         $discount_amount = 0;
 
-        // Application du code promo
+        
         if ($request->promo_code) {
             $promotion = Promotion::where('code', $request->promo_code)
                 ->where('is_active', true)
@@ -87,7 +87,7 @@ class ReservationController extends Controller
 
             if ($promotion) {
                 if ($promotion->max_uses && $promotion->used_count >= $promotion->max_uses) {
-                    // Optionnel: on pourrait retourner une erreur, mais ici on ignore juste la promo
+                    
                 } else {
                     if ($promotion->is_percentage) {
                         $discount_amount = ($total * $promotion->discount) / 100;
@@ -149,7 +149,7 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::findOrFail($id);
 
-        // Sécurité : Un client ne peut annuler que sa réservation
+        
         if (auth()->user()->role === 'client' && $reservation->user_id !== auth()->id()) {
             return response()->json(['message' => 'Non autorisé'], 403);
         }
@@ -159,7 +159,7 @@ class ReservationController extends Controller
         try {
             Mail::to($reservation->user->email)->send(new ReservationCancelled($reservation->load('user', 'room')));
         } catch (\Exception $e) {
-            // Ignorer si l'envoi de mail échoue (ex: config SMTP manquante en dev)
+            
         }
 
         return response()->json(['message' => 'Réservation annulée avec succès']);

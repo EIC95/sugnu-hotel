@@ -13,7 +13,7 @@ use App\Http\Controllers\API\CheckInOutController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\RoomImageController;
 
-// Routes publiques
+
 Route::get('/active-services', [ServiceController::class, 'activeServices']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/rooms/available', [RoomController::class, 'available']);
@@ -24,19 +24,19 @@ Route::get('/room-types/{id}', [RoomTypeController::class, 'show']);
 Route::post('/promotions/check', [PromotionController::class, 'checkCode']);
 Route::post('/register', [AuthController::class, 'register']);
 
-// Routes protégées
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
 
-    // Client
+    
     Route::post('/reservations', [ReservationController::class, 'store']);
     Route::get('/my-reservations', [ReservationController::class, 'myReservations']);
     Route::get('/reservations/{id}', [ReservationController::class, 'show']);
     Route::delete('/reservations/{id}', [ReservationController::class, 'destroy']);
     Route::post('/reviews', [ReviewController::class, 'store']);
 
-    // Admin et Réceptionniste
+    
     Route::middleware('role:admin|receptionist')->group(function () {
         Route::apiResource('reservations', ReservationController::class)->except(['store', 'destroy']);
         Route::apiResource('payments', PaymentController::class);
@@ -45,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index']);
     });
 
-    // Admin uniquement
+    
     Route::middleware('role:admin')->group(function () {
         Route::apiResource('room-types', RoomTypeController::class)->except(['index', 'show']);
         Route::apiResource('rooms', RoomController::class)->except(['index', 'show']);
