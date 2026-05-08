@@ -14,6 +14,7 @@ use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\RoomImageController;
 
 // Routes publiques
+Route::get('/active-services', [ServiceController::class, 'activeServices']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/rooms/available', [RoomController::class, 'available']);
 Route::get('/rooms', [RoomController::class, 'index']);
@@ -30,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Client
     Route::post('/reservations', [ReservationController::class, 'store']);
+    Route::get('/my-reservations', [ReservationController::class, 'myReservations']);
     Route::get('/reservations/{id}', [ReservationController::class, 'show']);
     Route::post('/reviews', [ReviewController::class, 'store']);
 
@@ -50,6 +52,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('promotions', PromotionController::class)->except(['store']);
         Route::post('/promotions', [PromotionController::class, 'store']);
         Route::post('/receptionists', [AuthController::class, 'createReceptionist']);
+        Route::get('/receptionists', [AuthController::class, 'getReceptionists']);
+        Route::put('/receptionists/{id}', [AuthController::class, 'updateReceptionist']);
+        Route::delete('/receptionists/{id}', [AuthController::class, 'deleteReceptionist']);
+        Route::post('/rooms/{id}/amenities', [RoomController::class, 'addAmenity']);
+        Route::delete('/rooms/{roomId}/amenities/{amenityId}', [RoomController::class, 'removeAmenity']);
         Route::post('/rooms/{roomId}/images', [RoomImageController::class, 'upload']);
         Route::post('/rooms/{roomId}/images/{imageId}/main', [RoomImageController::class, 'setMain']);
         Route::delete('/rooms/{roomId}/images/{imageId}', [RoomImageController::class, 'destroy']);

@@ -15,6 +15,10 @@ export class ServiceService {
     return this.http.get<Service[]>(`${this.apiUrl}/services`);
   }
 
+  getActiveServices(): Observable<Service[]> {
+    return this.http.get<Service[]>(`${this.apiUrl}/active-services`);
+  }
+
   createService(data: any): Observable<Service> {
     return this.http.post<Service>(`${this.apiUrl}/services`, data);
   }

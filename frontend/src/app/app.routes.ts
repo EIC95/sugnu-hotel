@@ -95,6 +95,10 @@ export const routes: Routes = [
       {
         path: 'receptionists',
         loadComponent: () => import('./pages/admin/receptionists/receptionists.component').then(m => m.ReceptionistsComponent)
+      },
+      {
+        path: 'planning',
+        loadComponent: () => import('./pages/admin/planning/planning.component').then(m => m.PlanningComponent)
       }
     ]
   },

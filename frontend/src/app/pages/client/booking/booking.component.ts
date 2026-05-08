@@ -5,8 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../../shared/navbar/navbar.component';
 import { FooterComponent } from '../../../shared/footer/footer.component';
 import { RoomService } from '../../../core/services/room.service';
+import { ServiceService } from '../../../core/services/service.service';
 import { ReservationService } from '../../../core/services/reservation.service';
 import { Room } from '../../../core/models/room.model';
+import { Service } from '../../../core/models/service.model';
 
 @Component({
   selector: 'app-booking',
@@ -16,11 +18,14 @@ import { Room } from '../../../core/models/room.model';
 })
 export class BookingComponent implements OnInit {
   roomService = inject(RoomService);
+  serviceService = inject(ServiceService);
   resService = inject(ReservationService);
   route = inject(ActivatedRoute);
   router = inject(Router);
 
   room: Room | null = null;
+  availableServices: Service[] = [];
+  selectedServices: { [id: number]: boolean } = {};
   loading = false;
   error = '';
 
@@ -37,34 +42,74 @@ export class BookingComponent implements OnInit {
     const id = this.route.snapshot.params['roomId'];
     this.bookingData.room_id = +id;
     this.roomService.getRoom(+id).subscribe(data => this.room = data);
-    
-    // Default dates (today and tomorrow)
-    const today = new Date();
-    const tomorrow = new Date(today);
+    this.serviceService.getActiveServices().subscribe(data => this.availableServices = data);
+
+    const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    
-    this.bookingData.check_in_date = today.toISOString().split('T')[0];
-    this.bookingData.check_out_date = tomorrow.toISOString().split('T')[0];
+    const dayAfter = new Date(tomorrow);
+    dayAfter.setDate(dayAfter.getDate() + 1);
+
+    this.bookingData.check_in_date = tomorrow.toISOString().split('T')[0];
+    this.bookingData.check_out_date = dayAfter.toISOString().split('T')[0];
+  }
+
+  get nights(): number {
+    if (!this.bookingData.check_in_date || !this.bookingData.check_out_date) return 0;
+    const diff = new Date(this.bookingData.check_out_date).getTime() - new Date(this.bookingData.check_in_date).getTime();
+    return Math.max(0, Math.round(diff / 86400000));
+  }
+
+  get servicesTotal(): number {
+    return this.availableServices
+      .filter(s => this.selectedServices[s.id])
+      .reduce((sum, s) => sum + s.price, 0);
+  }
+
+  get total(): number {
+    return (this.room?.price_per_night ?? 0) * this.nights + this.servicesTotal;
   }
 
   getMainImageUrl(): string {
     if (!this.room) return '';
-    const mainImg = this.room.images.find(img => img.is_main);
+    const mainImg = this.room.images?.find(img => img.is_main);
     if (mainImg) return `http://localhost:8000/storage/${mainImg.image_path}`;
-    return this.room.images.length > 0 ? `http://localhost:8000/storage/${this.room.images[0].image_path}` : 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800';
+    return this.room.images?.length > 0
+      ? `http://localhost:8000/storage/${this.room.images[0].image_path}`
+      : 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800';
   }
 
   book() {
     this.loading = true;
     this.error = '';
-    this.resService.createReservation(this.bookingData).subscribe({
+
+    const services = this.availableServices
+      .filter(s => this.selectedServices[s.id])
+      .map(s => ({ id: s.id, quantity: 1, price: s.price }));
+
+    const payload: any = { ...this.bookingData };
+    if (services.length) payload.services = services;
+
+    this.resService.createReservation(payload).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/client/dashboard']);
+        this.router.navigate(['/client/reservations']);
       },
       error: (err) => {
         this.loading = false;
-        this.error = 'Une erreur est survenue. Vérifiez la disponibilité pour ces dates.';
+        if (err.status === 422) {
+          const messages = err.error?.errors;
+          if (messages?.check_in_date) {
+            this.error = 'La date d\'arrivée doit être aujourd\'hui ou dans le futur.';
+          } else if (messages?.check_out_date) {
+            this.error = 'La date de départ doit être après la date d\'arrivée.';
+          } else {
+            this.error = 'Données invalides. Vérifiez les dates saisies.';
+          }
+        } else if (err.status === 409) {
+          this.error = 'Cette chambre est déjà réservée pour ces dates.';
+        } else {
+          this.error = 'Une erreur est survenue. Veuillez réessayer.';
+        }
       }
     });
   }

@@ -20,11 +20,20 @@ class ReservationController extends Controller
         return response()->json($reservations);
     }
 
+    public function myReservations(Request $request)
+    {
+        $reservations = Reservation::with(['room.roomType', 'room.images', 'room.amenities', 'services'])
+            ->where('user_id', $request->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return response()->json($reservations);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
             'room_id'          => 'required|exists:rooms,id',
-            'check_in_date'    => 'required|date|after:today',
+            'check_in_date'    => 'required|date|after_or_equal:today',
             'check_out_date'   => 'required|date|after:check_in_date',
             'number_of_adults' => 'required|integer|min:1',
         ]);

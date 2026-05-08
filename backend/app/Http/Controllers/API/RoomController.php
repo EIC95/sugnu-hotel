@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Room;
+use App\Models\RoomAmenity;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 
@@ -47,6 +48,21 @@ class RoomController extends Controller
         $room = Room::findOrFail($id);
         $room->delete();
         return response()->json(['message' => 'Chambre supprimée']);
+    }
+
+    public function addAmenity(Request $request, $id)
+    {
+        $request->validate(['amenity_name' => 'required|string']);
+        $room = Room::findOrFail($id);
+        $amenity = RoomAmenity::create(['room_id' => $room->id, 'amenity_name' => $request->amenity_name]);
+        return response()->json($amenity, 201);
+    }
+
+    public function removeAmenity($roomId, $amenityId)
+    {
+        $amenity = RoomAmenity::where('room_id', $roomId)->where('id', $amenityId)->firstOrFail();
+        $amenity->delete();
+        return response()->json(['message' => 'Équipement supprimé']);
     }
 
     public function available(Request $request)

@@ -32,17 +32,21 @@ export class AuthService {
     }
   }
 
-  login(credentials: { email: string; password: string }): Observable<any> {
+  login(credentials: { email: string; password: string }, returnUrl?: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
         localStorage.setItem('role', response.role);
-        
+
         this.currentUser.set(response.user);
         this.userRole.set(response.role);
-        
-        this.redirectByRole(response.role);
+
+        if (returnUrl) {
+          this.router.navigateByUrl(returnUrl);
+        } else {
+          this.redirectByRole(response.role);
+        }
       })
     );
   }
@@ -64,6 +68,18 @@ export class AuthService {
 
   createReceptionist(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/receptionists`, data);
+  }
+
+  getReceptionists(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/receptionists`);
+  }
+
+  updateReceptionist(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/receptionists/${id}`, data);
+  }
+
+  deleteReceptionist(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/receptionists/${id}`);
   }
 
   logout() {

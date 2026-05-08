@@ -1,41 +1,91 @@
 <div class="min-h-screen flex flex-col bg-gray-50">
-      <app-navbar></app-navbar>
+  <app-navbar></app-navbar>
 
-      <main class="grow py-12">
-        <div class="max-w-7xl mx-auto px-4">
-          <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold text-green-900">Gestion des Services</h1>
-            <button (click)="openAdd()" class="cursor-pointer bg-green-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-900 transition">Ajouter</button>
+  <main class="grow py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-green-900">Gestion des Services</h1>
+        <button (click)="openAdd()" class="cursor-pointer bg-green-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-900 transition">
+          + Ajouter un service
+        </button>
+      </div>
+
+      <!-- Formulaire Ajout / Modification -->
+      <div *ngIf="showForm" class="bg-white rounded-xl shadow-lg p-8 mb-8 max-w-2xl">
+        <h2 class="text-lg font-bold text-green-900 mb-6">{{ editMode ? 'Modifier le service' : 'Nouveau service' }}</h2>
+        <form (ngSubmit)="save()" #svcForm="ngForm" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nom du service</label>
+            <input type="text" [(ngModel)]="formData.name" name="name" required
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Description</label>
+            <textarea [(ngModel)]="formData.description" name="description" rows="2"
+                      class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Prix (FCFA)</label>
+            <input type="number" [(ngModel)]="formData.price" name="price" min="0" required
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+          </div>
+          <div class="flex items-center space-x-3">
+            <input type="checkbox" [(ngModel)]="formData.is_active" name="is_active" id="is_active"
+                   class="w-4 h-4 accent-green-700 cursor-pointer">
+            <label for="is_active" class="text-sm font-medium text-gray-700 cursor-pointer">Service actif</label>
           </div>
 
-          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-            <table class="w-full text-left">
-              <thead class="bg-gray-100 text-xs font-bold text-gray-500 uppercase">
-                <tr>
-                  <th class="px-6 py-4">Service</th>
-                  <th class="px-6 py-4">Prix</th>
-                  <th class="px-6 py-4">Statut</th>
-                  <th class="px-6 py-4">Actions</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100">
-                <tr *ngFor="let s of services" class="hover:bg-gray-50">
-                  <td class="px-6 py-4 font-bold">{{ s.name }}</td>
-                  <td class="px-6 py-4 font-bold text-green-800">{{ s.price }}€</td>
-                  <td class="px-6 py-4">
-                    <span [class]="'px-2 py-1 rounded text-[10px] font-bold ' + (s.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700')">
-                      {{ s.is_active ? 'Actif' : 'Inactif' }}
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 space-x-2">
-                    <button (click)="deleteService(s.id)" class="cursor-pointer text-red-600 hover:underline">Supprimer</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </main>
+          <div *ngIf="error" class="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">{{ error }}</div>
 
-      <app-footer></app-footer>
+          <div class="flex space-x-3 pt-2">
+            <button type="submit" [disabled]="!svcForm.form.valid || saving"
+                    class="cursor-pointer px-5 py-2.5 bg-green-800 text-white rounded-lg font-bold hover:bg-green-900 transition disabled:opacity-50">
+              {{ saving ? 'Enregistrement...' : (editMode ? 'Modifier' : 'Créer') }}
+            </button>
+            <button type="button" (click)="showForm = false"
+                    class="cursor-pointer px-5 py-2.5 border border-gray-300 text-gray-600 rounded-lg font-bold hover:bg-gray-50 transition">
+              Annuler
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Table des services -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <table class="w-full text-left">
+          <thead class="bg-gray-100 text-xs font-bold text-gray-500 uppercase">
+            <tr>
+              <th class="px-6 py-4">Service</th>
+              <th class="px-6 py-4">Description</th>
+              <th class="px-6 py-4">Prix</th>
+              <th class="px-6 py-4">Statut</th>
+              <th class="px-6 py-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr *ngFor="let s of services" class="hover:bg-gray-50">
+              <td class="px-6 py-4 font-bold text-gray-900">{{ s.name }}</td>
+              <td class="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">{{ s.description || '—' }}</td>
+              <td class="px-6 py-4 font-bold text-green-800">{{ s.price | number }} FCFA</td>
+              <td class="px-6 py-4">
+                <button (click)="toggleActive(s)"
+                        [class]="'cursor-pointer px-2 py-1 rounded text-[10px] font-bold uppercase transition ' + (s.is_active ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-red-100 text-red-700 hover:bg-red-200')">
+                  {{ s.is_active ? 'Actif' : 'Inactif' }}
+                </button>
+              </td>
+              <td class="px-6 py-4 space-x-3 text-xs">
+                <button (click)="editService(s)" class="cursor-pointer text-blue-600 font-bold hover:underline">Modifier</button>
+                <button (click)="deleteService(s.id)" class="cursor-pointer text-red-600 font-bold hover:underline">Supprimer</button>
+              </td>
+            </tr>
+            <tr *ngIf="services.length === 0">
+              <td colspan="5" class="px-6 py-12 text-center text-gray-400 italic">Aucun service enregistré.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>

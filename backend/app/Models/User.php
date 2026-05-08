@@ -10,6 +10,10 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @mixin \Laravel\Sanctum\HasApiTokens
+ * @mixin \Spatie\Permission\Traits\HasRoles
+ */
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -24,6 +28,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address',
     ];
 
     /**

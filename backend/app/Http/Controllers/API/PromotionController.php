@@ -10,7 +10,7 @@ class PromotionController extends Controller
 {
     public function index()
     {
-        $promotions = Promotion::where('is_active', true)->get();
+        $promotions = Promotion::orderBy('created_at', 'desc')->get();
         return response()->json($promotions);
     }
 
