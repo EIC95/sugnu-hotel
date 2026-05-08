@@ -46,6 +46,26 @@ export class RoomService {
     return this.http.delete(`${this.apiUrl}/rooms/${id}`);
   }
 
+  addAmenity(roomId: number, amenityName: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/rooms/${roomId}/amenities`, { amenity_name: amenityName });
+  }
+
+  removeAmenity(roomId: number, amenityId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/rooms/${roomId}/amenities/${amenityId}`);
+  }
+
+  createRoomType(data: any): Observable<RoomType> {
+    return this.http.post<RoomType>(`${this.apiUrl}/room-types`, data);
+  }
+
+  updateRoomType(id: number, data: any): Observable<RoomType> {
+    return this.http.put<RoomType>(`${this.apiUrl}/room-types/${id}`, data);
+  }
+
+  deleteRoomType(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/room-types/${id}`);
+  }
+
   uploadRoomImages(roomId: number, formData: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}/rooms/${roomId}/images`, formData);
   }

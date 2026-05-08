@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
   reservations: Reservation[] = [];
 
   ngOnInit() {
-    this.resService.getReservations().subscribe(data => this.reservations = data);
+    this.resService.getMyReservations().subscribe(data => this.reservations = data);
   }
 
   getStatusClass(status: string): string {

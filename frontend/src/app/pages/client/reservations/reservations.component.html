@@ -8,7 +8,16 @@
             <a routerLink="/rooms" class="bg-green-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-900 transition shadow-md">Nouvelle Réservation</a>
           </div>
 
-          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <!-- Loading -->
+          <div *ngIf="loading" class="bg-white rounded-xl shadow-lg p-12 text-center">
+            <div class="animate-spin w-8 h-8 border-4 border-green-800 border-t-transparent rounded-full mx-auto mb-4"></div>
+            <p class="text-gray-500">Chargement de vos réservations...</p>
+          </div>
+
+          <!-- Error -->
+          <div *ngIf="error" class="bg-red-50 border border-red-200 rounded-xl p-6 text-red-700">{{ error }}</div>
+
+          <div *ngIf="!loading && !error" class="bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="overflow-x-auto">
               <table class="w-full text-left">
                 <thead class="bg-gray-100 text-xs font-bold text-gray-500 uppercase border-b border-gray-200">
@@ -37,7 +46,7 @@
                       {{ res.number_of_adults + res.number_of_children }} pers.
                     </td>
                     <td class="px-6 py-4 font-bold text-orange-500">
-                      {{ res.total_price }}€
+                      {{ res.total_price }} FCFA
                     </td>
                     <td class="px-6 py-4">
                       <span [class]="'px-3 py-1 rounded-full text-xs font-bold ' + getStatusClass(res.status)">

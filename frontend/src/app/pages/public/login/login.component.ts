@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { NavbarComponent } from '../../../shared/navbar/navbar.component';
 import { FooterComponent } from '../../../shared/footer/footer.component';
@@ -14,12 +14,14 @@ import { FooterComponent } from '../../../shared/footer/footer.component';
 })
 export class LoginComponent {
   private authService = inject(AuthService);
+  private route = inject(ActivatedRoute);
   credentials = { email: '', password: '' };
   error = '';
 
   login() {
-    this.authService.login(this.credentials).subscribe({
-      error: (err) => {
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+    this.authService.login(this.credentials, returnUrl).subscribe({
+      error: () => {
         this.error = 'Email ou mot de passe incorrect.';
       }
     });

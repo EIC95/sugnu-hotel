@@ -105,4 +105,38 @@ class AuthController extends Controller
             'role'    => 'receptionist',
         ], 201);
     }
+
+    public function getReceptionists()
+    {
+        $receptionists = User::role('receptionist')->get(['id', 'name', 'email', 'phone', 'created_at']);
+        return response()->json($receptionists);
+    }
+
+    public function updateReceptionist(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name'     => 'sometimes|string',
+            'email'    => 'sometimes|email|unique:users,email,' . $id,
+            'phone'    => 'nullable|string',
+            'password' => 'nullable|min:6',
+        ]);
+
+        $data = $request->only(['name', 'email', 'phone']);
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return response()->json(['message' => 'Réceptionniste mis à jour', 'user' => $user]);
+    }
+
+    public function deleteReceptionist($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json(['message' => 'Réceptionniste supprimé']);
+    }
 }

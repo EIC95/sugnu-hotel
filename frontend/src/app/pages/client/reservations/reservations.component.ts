@@ -15,9 +15,20 @@ import { Reservation } from '../../../core/models/reservation.model';
 export class ReservationsComponent implements OnInit {
   resService = inject(ReservationService);
   reservations: Reservation[] = [];
+  loading = true;
+  error = '';
 
   ngOnInit() {
-    this.resService.getReservations().subscribe(data => this.reservations = data);
+    this.resService.getMyReservations().subscribe({
+      next: (data) => {
+        this.reservations = data;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Impossible de charger vos réservations. Veuillez réessayer.';
+        this.loading = false;
+      }
+    });
   }
 
   getStatusClass(status: string): string {

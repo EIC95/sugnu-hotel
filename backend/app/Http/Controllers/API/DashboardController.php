@@ -32,8 +32,8 @@ class DashboardController extends Controller
         $pendingReservations = Reservation::where('status', 'pending')->count();
 
         return response()->json([
-            'arrivals_today'      => $arrivalsToday,
-            'departures_today'    => $departuresToday,
+            'arrivals_today'      => $arrivalsToday->count(),
+            'departures_today'    => $departuresToday->count(),
             'total_rooms'         => $totalRooms,
             'occupied_rooms'      => $occupiedRooms,
             'occupancy_rate'      => $occupancyRate . '%',
