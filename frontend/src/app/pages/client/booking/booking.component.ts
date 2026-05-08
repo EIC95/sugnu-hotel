@@ -7,8 +7,10 @@ import { FooterComponent } from '../../../shared/footer/footer.component';
 import { RoomService } from '../../../core/services/room.service';
 import { ServiceService } from '../../../core/services/service.service';
 import { ReservationService } from '../../../core/services/reservation.service';
+import { PromotionService } from '../../../core/services/promotion.service';
 import { Room } from '../../../core/models/room.model';
 import { Service } from '../../../core/models/service.model';
+import { Promotion } from '../../../core/models/promotion.model';
 
 @Component({
   selector: 'app-booking',
@@ -20,6 +22,7 @@ export class BookingComponent implements OnInit {
   roomService = inject(RoomService);
   serviceService = inject(ServiceService);
   resService = inject(ReservationService);
+  promoService = inject(PromotionService);
   route = inject(ActivatedRoute);
   router = inject(Router);
 
@@ -29,13 +32,20 @@ export class BookingComponent implements OnInit {
   loading = false;
   error = '';
 
+  // Promo
+  promoCode = '';
+  appliedPromotion: Promotion | null = null;
+  promoError = '';
+  checkingPromo = false;
+
   bookingData = {
     room_id: 0,
     check_in_date: '',
     check_out_date: '',
     number_of_adults: 1,
     number_of_children: 0,
-    special_requests: ''
+    special_requests: '',
+    promo_code: ''
   };
 
   ngOnInit() {
@@ -65,8 +75,47 @@ export class BookingComponent implements OnInit {
       .reduce((sum, s) => sum + s.price, 0);
   }
 
-  get total(): number {
+  get subtotal(): number {
     return (this.room?.price_per_night ?? 0) * this.nights + this.servicesTotal;
+  }
+
+  get discountAmount(): number {
+    if (!this.appliedPromotion) return 0;
+    const sub = this.subtotal;
+    if (this.appliedPromotion.is_percentage) {
+      return (sub * this.appliedPromotion.discount) / 100;
+    }
+    return this.appliedPromotion.discount;
+  }
+
+  get total(): number {
+    return Math.max(0, this.subtotal - this.discountAmount);
+  }
+
+  applyPromo() {
+    if (!this.promoCode) return;
+    this.checkingPromo = true;
+    this.promoError = '';
+    this.appliedPromotion = null;
+
+    this.promoService.checkCode(this.promoCode).subscribe({
+      next: (promo) => {
+        this.appliedPromotion = promo;
+        this.bookingData.promo_code = promo.code;
+        this.checkingPromo = false;
+      },
+      error: (err) => {
+        this.promoError = 'Code invalide ou expirAc.';
+        this.checkingPromo = false;
+        this.bookingData.promo_code = '';
+      }
+    });
+  }
+
+  removePromo() {
+    this.appliedPromotion = null;
+    this.promoCode = '';
+    this.bookingData.promo_code = '';
   }
 
   getMainImageUrl(): string {

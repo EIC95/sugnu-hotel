@@ -15,6 +15,17 @@ class HotelSeeder extends Seeder
 {
     public function run(): void
     {
+        // ── Promotion de bienvenue ────────────────────────────────────────────
+        Promotion::create([
+            'code'          => 'WELCOME10',
+            'description'   => 'Offre de bienvenue -10%',
+            'discount'      => 10,
+            'is_percentage' => true,
+            'starts_at'     => now(),
+            'ends_at'       => now()->addMonths(6),
+            'is_active'     => true,
+        ]);
+
         // ── Types de chambres ─────────────────────────────────────────────────
         $standard = RoomType::create([
             'name'          => 'Standard',

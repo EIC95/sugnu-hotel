@@ -51,16 +51,64 @@
                   </div>
                 </div>
 
-                <!-- Room Image & Amenity Quick View -->
+                <!-- Room Image & Info -->
                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
                   <h3 class="font-bold text-green-900 mb-2">Ma Chambre</h3>
-                  <div class="h-40 rounded-lg overflow-hidden mb-4 shadow-sm">
-                    <img [src]="'http://localhost:8000/storage/' + reservation.room.images[0]?.image_path" class="w-full h-full object-cover">
+                  <div class="h-48 rounded-lg overflow-hidden mb-4 shadow-sm group relative">
+                    <img [src]="getMainImageUrl()" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
+                      <p class="text-white text-xs font-bold">Chambre #{{ reservation.room.room_number }} - A%tage {{ reservation.room.floor }}</p>
+                    </div>
                   </div>
-                  <div class="flex flex-wrap gap-2">
-                    <span *ngFor="let am of reservation.room.amenities.slice(0, 3)" class="text-[10px] bg-white border border-gray-200 px-2 py-1 rounded-md text-gray-500 uppercase font-bold">
-                      {{ am.amenity_name }}
-                    </span>
+                  
+                  <!-- Amenities Section -->
+                  <div *ngIf="reservation.room.amenities?.length">
+                    <h4 class="text-[10px] uppercase font-bold text-gray-400 mb-2 tracking-wider">A%quipements inclus</h4>
+                    <div class="flex flex-wrap gap-2">
+                      <span *ngFor="let am of reservation.room.amenities" class="text-[10px] bg-white border border-green-100 px-2 py-1 rounded-md text-green-700 font-bold flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        {{ am.amenity_name }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Price Breakdown -->
+              <div class="mt-8 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                  <h3 class="font-bold text-green-900 mb-4">Résumé financier</h3>
+                  <div class="space-y-3 text-sm">
+                    <div class="flex justify-between text-gray-600">
+                      <span>Chambre ({{ reservation.room.price_per_night | number }} FCFA x {{ nights }} nuits)</span>
+                      <span class="font-bold">{{ roomTotal | number }} FCFA</span>
+                    </div>
+                    <div class="flex justify-between text-gray-600" *ngIf="servicesTotal > 0">
+                      <span>Services additionnels</span>
+                      <span class="font-bold">{{ servicesTotal | number }} FCFA</span>
+                    </div>
+                    <div class="flex justify-between text-green-600 font-bold pt-2 border-t border-gray-200" *ngIf="reservation.discount_amount > 0">
+                      <span>Réduction ({{ reservation.promo_code }})</span>
+                      <span>- {{ reservation.discount_amount | number }} FCFA</span>
+                    </div>
+                    <div class="flex justify-between text-lg font-bold text-green-900 pt-2 border-t border-gray-200">
+                      <span>Total payA</span>
+                      <span class="text-orange-600">{{ reservation.total_price | number }} FCFA</span>
+                    </div>
+                  </div>
+                </div>
+
+              <!-- Services list -->
+              <div class="mt-8" *ngIf="reservation.services?.length">
+                <h2 class="text-lg font-bold text-green-900 mb-4 border-b pb-2">Services sAclActionnAs</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div *ngFor="let s of reservation.services" class="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-100">
+                    <div>
+                      <p class="font-bold text-green-900">{{ s.name }}</p>
+                      <p class="text-xs text-gray-500">Prix unitaire: {{ s.pivot.price | number }} FCFA</p>
+                    </div>
+                    <span class="font-bold text-green-800">{{ s.pivot.price * s.pivot.quantity | number }} FCFA</span>
                   </div>
                 </div>
               </div>

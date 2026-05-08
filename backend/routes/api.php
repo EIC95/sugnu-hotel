@@ -33,11 +33,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/reservations', [ReservationController::class, 'store']);
     Route::get('/my-reservations', [ReservationController::class, 'myReservations']);
     Route::get('/reservations/{id}', [ReservationController::class, 'show']);
+    Route::delete('/reservations/{id}', [ReservationController::class, 'destroy']);
     Route::post('/reviews', [ReviewController::class, 'store']);
 
     // Admin et Réceptionniste
     Route::middleware('role:admin|receptionist')->group(function () {
-        Route::apiResource('reservations', ReservationController::class)->except(['store']);
+        Route::apiResource('reservations', ReservationController::class)->except(['store', 'destroy']);
         Route::apiResource('payments', PaymentController::class);
         Route::post('/reservations/{id}/checkin', [CheckInOutController::class, 'checkIn']);
         Route::post('/reservations/{id}/checkout', [CheckInOutController::class, 'checkOut']);
