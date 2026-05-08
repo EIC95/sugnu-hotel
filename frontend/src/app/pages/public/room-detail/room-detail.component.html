@@ -1,7 +1,7 @@
 <div class="min-h-screen flex flex-col">
   <app-navbar></app-navbar>
 
-  <main class="flex-grow bg-gray-50" *ngIf="room">
+  <main class="grow bg-gray-50" *ngIf="room">
     <div class="max-w-7xl mx-auto px-4 py-12">
 
       <!-- Hero card -->
@@ -26,7 +26,7 @@
             </div>
 
             <!-- Amenities -->
-            <div class="mb-8" *ngIf="room.amenities?.length">
+            <div class="mb-8" *ngIf="room.amenities.length">
               <h2 class="text-lg font-bold text-green-900 mb-3">Équipements inclus</h2>
               <ul class="grid grid-cols-2 gap-2">
                 <li *ngFor="let amenity of room.amenities" class="flex items-center text-gray-600 text-sm">
