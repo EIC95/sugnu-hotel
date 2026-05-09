@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://127.0.0.1:8000/api'
+  production: import.meta.env.NG_APP_PRODUCTION,
+  apiUrl: import.meta.env.NG_APP_API_URL
 };

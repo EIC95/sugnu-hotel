@@ -29,8 +29,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-# Copier uniquement les fichiers Composer
-COPY composer.json composer.lock ./
+# Copier tout le projet
+COPY . .
 
 # Installer dépendances
 RUN composer install \
@@ -38,13 +38,6 @@ RUN composer install \
     --no-interaction \
     --prefer-dist \
     --optimize-autoloader
-
-# Copier le reste du projet
-COPY . .
-
-# Laravel cache
-RUN php artisan config:clear || true
-RUN php artisan cache:clear || true
 
 EXPOSE 8000
 
