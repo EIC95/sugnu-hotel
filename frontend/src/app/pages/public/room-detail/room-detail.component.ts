@@ -7,6 +7,7 @@ import { Room } from '../../../core/models/room.model';
 import { Service } from '../../../core/models/service.model';
 import { NavbarComponent } from '../../../shared/navbar/navbar.component';
 import { FooterComponent } from '../../../shared/footer/footer.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-room-detail',
@@ -33,12 +34,12 @@ export class RoomDetailComponent implements OnInit {
     this.serviceService.getActiveServices().subscribe(data => this.services = data);
   }
 
+  private storageBase = environment.apiUrl.replace(/\/api$/, '') + '/storage';
+
   getMainImageUrl(): string {
-    if (!this.room || !this.room.images || this.room.images.length === 0) {
-      return 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800';
-    }
-    const mainImg = this.room.images.find(img => img.is_main);
-    if (mainImg) return `http://localhost:8000/storage/${mainImg.image_path}`;
-    return `http://localhost:8000/storage/${this.room.images[0].image_path}`;
+    const img = this.room?.images?.find(i => i.is_main) ?? this.room?.images?.[0];
+    return img
+      ? `${this.storageBase}/${img.image_path}`
+      : 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800';
   }
 }

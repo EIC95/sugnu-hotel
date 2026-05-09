@@ -5,6 +5,7 @@ import { NavbarComponent } from '../../../shared/navbar/navbar.component';
 import { FooterComponent } from '../../../shared/footer/footer.component';
 import { RoomService } from '../../../core/services/room.service';
 import { RoomType } from '../../../core/models/room-type.model';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-room-types',
@@ -15,6 +16,14 @@ import { RoomType } from '../../../core/models/room-type.model';
 export class RoomTypesComponent implements OnInit {
   roomService = inject(RoomService);
   roomTypes: RoomType[] = [];
+
+  private storageBase = environment.apiUrl.replace(/\/api$/, '') + '/storage';
+
+  getRoomTypeImageUrl(image: string | null | undefined): string {
+    return image
+      ? `${this.storageBase}/${image}`
+      : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800';
+  }
 
   showModal = false;
   editMode = false;

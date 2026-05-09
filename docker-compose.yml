@@ -27,7 +27,7 @@ services:
       - ./backend/.env
     depends_on:
       - db
-    command: sh -c "composer install && php artisan migrate:fresh --seed --force && php artisan serve --host=0.0.0.0 --port=8000"
+    command: sh -c "composer install && php artisan migrate:fresh --seed --force && (php artisan storage:link --force || true) && php artisan serve --host=0.0.0.0 --port=8000"
 
   frontend:
     build:
