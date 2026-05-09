@@ -13,19 +13,19 @@
             <p class="text-xl mb-8">Confort, luxe et hospitalité au cœur de la ville.</p>
 
             <!-- Search Bar -->
-            <div class="bg-white p-6 rounded-2xl shadow-2xl text-gray-900 max-w-3xl mx-auto">
+            <div class="bg-white p-6 rounded-sm border border-stone-200 shadow-sm text-stone-900 max-w-3xl mx-auto">
               <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div class="text-left">
-                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Arrivée</label>
-                  <input type="date" [(ngModel)]="searchData.check_in_date" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                  <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Arrivée</label>
+                  <input type="date" [(ngModel)]="searchData.check_in_date" class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
                 </div>
                 <div class="text-left">
-                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Départ</label>
-                  <input type="date" [(ngModel)]="searchData.check_out_date" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                  <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Départ</label>
+                  <input type="date" [(ngModel)]="searchData.check_out_date" class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
                 </div>
                 <div class="text-left">
-                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Adultes</label>
-                  <select [(ngModel)]="searchData.number_of_adults" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                  <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Adultes</label>
+                  <select [(ngModel)]="searchData.number_of_adults" class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
                     <option value="1">1 Adulte</option>
                     <option value="2">2 Adultes</option>
                     <option value="3">3 Adultes</option>
@@ -33,7 +33,7 @@
                   </select>
                 </div>
                 <div class="flex items-end">
-                  <button (click)="search()" class="cursor-pointer w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-lg transition duration-300">Rechercher</button>
+                  <button (click)="search()" class="cursor-pointer w-full bg-[#C1A87D] hover:bg-[#b09e80] text-white font-bold py-2.5 rounded-sm transition duration-300">Rechercher</button>
                 </div>
               </div>
             </div>
@@ -44,15 +44,15 @@
         <section class="max-w-7xl mx-auto px-4 py-16">
           <div class="flex justify-between items-end mb-12">
             <div>
-              <h2 class="text-3xl font-bold text-green-900">Chambres Disponibles</h2>
-              <p class="text-gray-500">Découvrez nos espaces conçus pour votre bien-être.</p>
+              <h2 class="text-3xl font-bold text-stone-900">Chambres Disponibles</h2>
+              <p class="text-stone-500">Découvrez nos espaces conçus pour votre bien-être.</p>
             </div>
-            <a routerLink="/rooms" class="text-green-800 font-bold hover:underline">Voir tout →</a>
+            <a routerLink="/rooms" class="text-stone-800 font-bold hover:underline">Voir tout →</a>
           </div>
 
           <!-- Loading skeleton -->
           <div *ngIf="loading" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div *ngFor="let i of [1,2,3]" class="bg-white rounded-xl shadow-lg overflow-hidden animate-pulse">
+            <div *ngFor="let i of [1,2,3]" class="bg-white rounded-sm border border-stone-200 shadow-sm overflow-hidden animate-pulse">
               <div class="h-48 bg-gray-200"></div>
               <div class="p-6">
                 <div class="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
@@ -68,7 +68,7 @@
           </div>
 
           <!-- No rooms message -->
-          <div *ngIf="!loading && featuredRooms.length === 0" class="text-center py-12 text-gray-500">
+          <div *ngIf="!loading && featuredRooms.length === 0" class="text-center py-12 text-stone-500">
             <p class="text-lg">Aucune chambre disponible pour le moment.</p>
           </div>
         </section>

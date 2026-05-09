@@ -1,17 +1,17 @@
-<div class="min-h-screen flex flex-col bg-gray-50">
+<div class="min-h-screen flex flex-col bg-stone-50">
   <app-navbar></app-navbar>
 
   <main class="grow py-12">
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between items-center mb-8">
-        <h1 class="text-3xl font-bold text-green-900">Types de Chambres</h1>
-        <button (click)="openAdd()" class="cursor-pointer bg-green-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-900 transition">
+        <h1 class="text-3xl font-bold text-stone-900">Types de Chambres</h1>
+        <button (click)="openAdd()" class="cursor-pointer bg-stone-800 text-white px-6 py-2 rounded-sm font-bold hover:bg-stone-900 transition">
           + Nouveau Type
         </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div *ngFor="let type of roomTypes" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 flex flex-col">
+        <div *ngFor="let type of roomTypes" class="bg-white rounded-sm border border-stone-200 shadow-sm overflow-hidden border border-gray-100 flex flex-col">
           <div class="h-48 relative">
             <img [src]="type.image ? 'http://localhost:8000/storage/' + type.image : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800'"
                  class="w-full h-full object-cover" alt="">
@@ -20,11 +20,11 @@
             </div>
           </div>
           <div class="p-6 grow flex flex-col">
-            <p class="text-gray-500 text-sm mb-4 line-clamp-3 grow">{{ type.description }}</p>
+            <p class="text-stone-500 text-sm mb-4 line-clamp-3 grow">{{ type.description }}</p>
             <div class="flex justify-between items-center mt-2">
               <div>
-                <p class="text-green-800 font-bold">{{ type.base_price | number }} FCFA / nuit</p>
-                <p class="text-xs text-gray-400">Max {{ type.max_occupancy }} pers.</p>
+                <p class="text-stone-800 font-bold">{{ type.base_price | number }} FCFA / nuit</p>
+                <p class="text-xs text-stone-400">Max {{ type.max_occupancy }} pers.</p>
               </div>
               <div class="flex space-x-3">
                 <button (click)="editType(type)" class="cursor-pointer text-blue-600 font-bold text-sm hover:underline">Modifier</button>
@@ -34,7 +34,7 @@
           </div>
         </div>
 
-        <div *ngIf="roomTypes.length === 0" class="col-span-3 py-16 text-center text-gray-400 italic">
+        <div *ngIf="roomTypes.length === 0" class="col-span-3 py-16 text-center text-stone-400 italic">
           Aucun type de chambre enregistré.
         </div>
       </div>
@@ -45,45 +45,45 @@
 
   
   <div *ngIf="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg">
+    <div class="bg-white rounded-sm border border-stone-200 shadow-sm w-full max-w-lg">
       <div class="flex justify-between items-center px-8 py-5 border-b border-gray-100">
-        <h2 class="text-xl font-bold text-green-900">{{ editMode ? 'Modifier le type' : 'Nouveau type de chambre' }}</h2>
-        <button (click)="showModal = false" class="cursor-pointer text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+        <h2 class="text-xl font-bold text-stone-900">{{ editMode ? 'Modifier le type' : 'Nouveau type de chambre' }}</h2>
+        <button (click)="showModal = false" class="cursor-pointer text-stone-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
       </div>
 
       <form (ngSubmit)="save()" #rtForm="ngForm" class="px-8 py-6 space-y-4">
         <div>
-          <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nom</label>
+          <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Nom</label>
           <input type="text" [(ngModel)]="formData.name" name="name" required
-                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                 class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
         </div>
         <div>
-          <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Description</label>
+          <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Description</label>
           <textarea [(ngModel)]="formData.description" name="description" required rows="3"
-                    class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20"></textarea>
+                    class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20"></textarea>
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Prix de base (FCFA)</label>
+            <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Prix de base (FCFA)</label>
             <input type="number" [(ngModel)]="formData.base_price" name="base_price" min="0" required
-                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                   class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
           </div>
           <div>
-            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Capacité max</label>
+            <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Capacité max</label>
             <input type="number" [(ngModel)]="formData.max_occupancy" name="max_occupancy" min="1" required
-                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                   class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
           </div>
         </div>
 
-        <div *ngIf="error" class="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">{{ error }}</div>
+        <div *ngIf="error" class="p-3 bg-red-50 border border-red-200 text-red-700 rounded-sm text-sm">{{ error }}</div>
 
         <div class="flex justify-end space-x-3 pt-2">
           <button type="button" (click)="showModal = false"
-                  class="cursor-pointer px-5 py-2.5 rounded-lg border border-gray-300 text-gray-600 font-bold hover:bg-gray-50 transition">
+                  class="cursor-pointer px-5 py-2.5 rounded-sm border border-gray-300 text-gray-600 font-bold hover:bg-stone-50 transition">
             Annuler
           </button>
           <button type="submit" [disabled]="!rtForm.form.valid || saving"
-                  class="cursor-pointer px-5 py-2.5 rounded-lg bg-green-800 text-white font-bold hover:bg-green-900 transition disabled:opacity-50">
+                  class="cursor-pointer px-5 py-2.5 rounded-sm bg-stone-800 text-white font-bold hover:bg-stone-900 transition disabled:opacity-50">
             {{ saving ? 'Enregistrement...' : (editMode ? 'Modifier' : 'Créer') }}
           </button>
         </div>

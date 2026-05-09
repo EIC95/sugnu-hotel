@@ -1,18 +1,18 @@
-<div class="min-h-screen flex flex-col bg-gray-50">
+<div class="min-h-screen flex flex-col bg-stone-50">
   <app-navbar></app-navbar>
 
   <main class="grow py-12">
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between items-center mb-8">
-        <h1 class="text-3xl font-bold text-green-900">Gestion du Staff</h1>
-        <button (click)="openAdd()" class="cursor-pointer bg-green-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-900 transition">
+        <h1 class="text-3xl font-bold text-stone-900">Gestion du Staff</h1>
+        <button (click)="openAdd()" class="cursor-pointer bg-stone-800 text-white px-6 py-2 rounded-sm font-bold hover:bg-stone-900 transition">
           + Ajouter un réceptionniste
         </button>
       </div>
 
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+      <div class="bg-white rounded-sm border border-stone-200 shadow-sm overflow-hidden">
         <table class="w-full text-left">
-          <thead class="bg-gray-100 text-xs font-bold text-gray-500 uppercase">
+          <thead class="bg-stone-100 text-xs font-bold text-stone-500 uppercase">
             <tr>
               <th class="px-6 py-4">Nom</th>
               <th class="px-6 py-4">Email</th>
@@ -22,18 +22,18 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
-            <tr *ngFor="let r of receptionists" class="hover:bg-gray-50">
-              <td class="px-6 py-4 font-bold text-gray-900">{{ r.name }}</td>
+            <tr *ngFor="let r of receptionists" class="hover:bg-stone-50">
+              <td class="px-6 py-4 font-bold text-stone-900">{{ r.name }}</td>
               <td class="px-6 py-4 text-sm text-gray-600">{{ r.email }}</td>
-              <td class="px-6 py-4 text-sm text-gray-500">{{ r.phone || '—' }}</td>
-              <td class="px-6 py-4 text-sm text-gray-400">{{ r.created_at | date:'dd/MM/yyyy' }}</td>
+              <td class="px-6 py-4 text-sm text-stone-500">{{ r.phone || '—' }}</td>
+              <td class="px-6 py-4 text-sm text-stone-400">{{ r.created_at | date:'dd/MM/yyyy' }}</td>
               <td class="px-6 py-4 space-x-3 text-xs">
                 <button (click)="editReceptionist(r)" class="cursor-pointer text-blue-600 font-bold hover:underline">Modifier</button>
                 <button (click)="deleteReceptionist(r.id)" class="cursor-pointer text-red-600 font-bold hover:underline">Supprimer</button>
               </td>
             </tr>
             <tr *ngIf="receptionists.length === 0">
-              <td colspan="5" class="px-6 py-12 text-center text-gray-400 italic">Aucun réceptionniste enregistré.</td>
+              <td colspan="5" class="px-6 py-12 text-center text-stone-400 italic">Aucun réceptionniste enregistré.</td>
             </tr>
           </tbody>
         </table>
@@ -45,48 +45,48 @@
 
   
   <div *ngIf="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg">
+    <div class="bg-white rounded-sm border border-stone-200 shadow-sm w-full max-w-lg">
       <div class="flex justify-between items-center px-8 py-5 border-b border-gray-100">
-        <h2 class="text-xl font-bold text-green-900">{{ editMode ? 'Modifier le réceptionniste' : 'Nouveau réceptionniste' }}</h2>
-        <button (click)="showModal = false" class="cursor-pointer text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+        <h2 class="text-xl font-bold text-stone-900">{{ editMode ? 'Modifier le réceptionniste' : 'Nouveau réceptionniste' }}</h2>
+        <button (click)="showModal = false" class="cursor-pointer text-stone-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
       </div>
 
       <form (ngSubmit)="save()" #staffForm="ngForm" class="px-8 py-6 space-y-4">
         <div>
-          <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nom complet</label>
+          <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Nom complet</label>
           <input type="text" [(ngModel)]="formData.name" name="name" required
-                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                 class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Email</label>
+            <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Email</label>
             <input type="email" [(ngModel)]="formData.email" name="email" required
-                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                   class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
           </div>
           <div>
-            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Téléphone</label>
+            <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Téléphone</label>
             <input type="text" [(ngModel)]="formData.phone" name="phone"
-                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                   class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
           </div>
         </div>
         <div>
-          <label class="block text-xs font-bold text-gray-500 uppercase mb-1">
+          <label class="block text-xs font-bold text-stone-500 uppercase mb-1">
             Mot de passe {{ editMode ? '(laisser vide pour ne pas changer)' : '' }}
           </label>
           <input type="password" [(ngModel)]="formData.password" name="password"
                  [required]="!editMode"
-                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                 class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
         </div>
 
-        <div *ngIf="error" class="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">{{ error }}</div>
+        <div *ngIf="error" class="p-3 bg-red-50 border border-red-200 text-red-700 rounded-sm text-sm">{{ error }}</div>
 
         <div class="flex justify-end space-x-3 pt-2">
           <button type="button" (click)="showModal = false"
-                  class="cursor-pointer px-5 py-2.5 rounded-lg border border-gray-300 text-gray-600 font-bold hover:bg-gray-50 transition">
+                  class="cursor-pointer px-5 py-2.5 rounded-sm border border-gray-300 text-gray-600 font-bold hover:bg-stone-50 transition">
             Annuler
           </button>
           <button type="submit" [disabled]="!staffForm.form.valid || saving"
-                  class="cursor-pointer px-5 py-2.5 rounded-lg bg-green-800 text-white font-bold hover:bg-green-900 transition disabled:opacity-50">
+                  class="cursor-pointer px-5 py-2.5 rounded-sm bg-stone-800 text-white font-bold hover:bg-stone-900 transition disabled:opacity-50">
             {{ saving ? 'Enregistrement...' : (editMode ? 'Modifier' : 'Créer') }}
           </button>
         </div>

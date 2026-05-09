@@ -29,10 +29,10 @@ export class DashboardComponent implements OnInit {
 
   getStatusClass(status: string): string {
     switch(status) {
-      case 'confirmed': return 'bg-green-100 text-green-700';
+      case 'confirmed': return 'bg-stone-100 text-stone-700';
       case 'checked_in': return 'bg-blue-100 text-blue-700';
       case 'checked_out': return 'bg-purple-100 text-purple-700';
-      default: return 'bg-gray-100 text-gray-700';
+      default: return 'bg-stone-100 text-gray-700';
     }
   }
 
