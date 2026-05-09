@@ -5,6 +5,7 @@ import { NavbarComponent } from '../../../shared/navbar/navbar.component';
 import { FooterComponent } from '../../../shared/footer/footer.component';
 import { ReservationService } from '../../../core/services/reservation.service';
 import { Reservation } from '../../../core/models/reservation.model';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-reservation-detail',
@@ -44,13 +45,13 @@ export class ReservationDetailComponent implements OnInit {
     return this.roomTotal + this.servicesTotal;
   }
 
+  private storageBase = environment.apiUrl.replace(/\/api$/, '') + '/storage';
+
   getMainImageUrl(): string {
-    if (!this.reservation || !this.reservation.room || !this.reservation.room.images) return '';
-    const images = this.reservation.room.images;
-    const mainImg = images.find((img: any) => img.is_main);
-    const path = mainImg ? mainImg.image_path : (images[0]?.image_path || '');
-    if (!path) return 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800';
-    return `http://localhost:8000/storage/${path}`;
+    const images = this.reservation?.room?.images;
+    if (!images?.length) return 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800';
+    const img = images.find((i: any) => i.is_main) ?? images[0];
+    return img?.image_path ? `${this.storageBase}/${img.image_path}` : 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800';
   }
 
   getStatusClass(status: string): string {

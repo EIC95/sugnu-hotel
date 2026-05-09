@@ -13,7 +13,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div *ngFor="let type of roomTypes" class="bg-white rounded-sm border border-stone-200 shadow-sm overflow-hidden border border-gray-100 flex flex-col">
           <div class="h-48 relative">
-            <img [src]="type.image ? 'http://localhost:8000/storage/' + type.image : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800'"
+            <img [src]="getRoomTypeImageUrl(type.image)"
                  class="w-full h-full object-cover" alt="">
             <div class="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/70 to-transparent text-white">
               <h3 class="font-bold text-xl">{{ type.name }}</h3>

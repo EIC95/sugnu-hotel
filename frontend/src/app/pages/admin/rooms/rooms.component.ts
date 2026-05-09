@@ -5,7 +5,9 @@ import { NavbarComponent } from '../../../shared/navbar/navbar.component';
 import { FooterComponent } from '../../../shared/footer/footer.component';
 import { RoomService } from '../../../core/services/room.service';
 import { Room } from '../../../core/models/room.model';
+import { RoomImage } from '../../../core/models/room-image.model';
 import { RoomType } from '../../../core/models/room-type.model';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-rooms',
@@ -29,6 +31,14 @@ export class RoomsComponent implements OnInit {
   amenityRoom: Room | null = null;
   newAmenity = '';
   amenityError = '';
+
+  showImages = false;
+  imageRoom: Room | null = null;
+  pendingFiles: File[] = [];
+  imageUploading = false;
+  imageError = '';
+
+  private storageBase = environment.apiUrl.replace(/\/api$/, '') + '/storage';
 
   formData = {
     room_number: '',
@@ -57,10 +67,13 @@ export class RoomsComponent implements OnInit {
   load() {
     this.roomService.getRooms().subscribe(data => {
       this.rooms = data;
-      
       if (this.amenityRoom) {
         const updated = data.find(r => r.id === this.amenityRoom!.id);
         if (updated) this.amenityRoom = updated;
+      }
+      if (this.imageRoom) {
+        const updated = data.find(r => r.id === this.imageRoom!.id);
+        if (updated) this.imageRoom = updated;
       }
     });
   }
@@ -145,6 +158,61 @@ export class RoomsComponent implements OnInit {
         this.load();
       },
       error: () => { this.amenityError = 'Erreur lors de la suppression.'; }
+    });
+  }
+
+  openImages(room: Room) {
+    this.imageRoom = room;
+    this.pendingFiles = [];
+    this.imageError = '';
+    this.showImages = true;
+  }
+
+  getImageUrl(path: string): string {
+    return `${this.storageBase}/${path}`;
+  }
+
+  onFilesSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.pendingFiles = input.files ? Array.from(input.files) : [];
+  }
+
+  uploadImages() {
+    if (!this.imageRoom || !this.pendingFiles.length) return;
+    this.imageUploading = true;
+    this.imageError = '';
+    const fd = new FormData();
+    this.pendingFiles.forEach(f => fd.append('images[]', f));
+    this.roomService.uploadRoomImages(this.imageRoom.id, fd).subscribe({
+      next: (uploaded: RoomImage[]) => {
+        this.imageRoom!.images = [...(this.imageRoom!.images ?? []), ...uploaded];
+        this.pendingFiles = [];
+        this.imageUploading = false;
+        this.load();
+      },
+      error: () => { this.imageError = 'Erreur lors de l\'upload.'; this.imageUploading = false; }
+    });
+  }
+
+  setMainImage(imageId: number) {
+    if (!this.imageRoom) return;
+    this.roomService.setMainImage(this.imageRoom.id, imageId).subscribe({
+      next: () => {
+        this.imageRoom!.images.forEach(img => img.is_main = img.id === imageId);
+        this.load();
+      },
+      error: () => { this.imageError = 'Erreur lors de la mise à jour.'; }
+    });
+  }
+
+  deleteImage(imageId: number) {
+    if (!this.imageRoom || !confirm('Supprimer cette image ?')) return;
+    this.roomService.deleteImage(this.imageRoom.id, imageId).subscribe({
+      next: () => {
+        this.imageRoom!.images = this.imageRoom!.images.filter(img => img.id !== imageId);
+        this.load();
+      },
+      error: () => { this.imageError = 'Erreur lors de la suppression.'; }
     });
   }
 

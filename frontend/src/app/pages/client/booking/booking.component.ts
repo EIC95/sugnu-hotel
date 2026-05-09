@@ -8,6 +8,7 @@ import { RoomService } from '../../../core/services/room.service';
 import { ServiceService } from '../../../core/services/service.service';
 import { ReservationService } from '../../../core/services/reservation.service';
 import { PromotionService } from '../../../core/services/promotion.service';
+import { environment } from '../../../../environments/environment';
 import { Room } from '../../../core/models/room.model';
 import { Service } from '../../../core/models/service.model';
 import { Promotion } from '../../../core/models/promotion.model';
@@ -118,12 +119,13 @@ export class BookingComponent implements OnInit {
     this.bookingData.promo_code = '';
   }
 
+  private storageBase = environment.apiUrl.replace(/\/api$/, '') + '/storage';
+
   getMainImageUrl(): string {
     if (!this.room) return '';
-    const mainImg = this.room.images?.find(img => img.is_main);
-    if (mainImg) return `http://localhost:8000/storage/${mainImg.image_path}`;
-    return this.room.images?.length > 0
-      ? `http://localhost:8000/storage/${this.room.images[0].image_path}`
+    const img = this.room.images?.find(i => i.is_main) ?? this.room.images?.[0];
+    return img
+      ? `${this.storageBase}/${img.image_path}`
       : 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800';
   }
 

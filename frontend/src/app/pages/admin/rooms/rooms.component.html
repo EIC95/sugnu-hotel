@@ -20,6 +20,7 @@
               <th class="px-6 py-4">Capacité</th>
               <th class="px-6 py-4">Prix/Nuit</th>
               <th class="px-6 py-4">Équipements</th>
+              <th class="px-6 py-4">Photos</th>
               <th class="px-6 py-4">Statut</th>
               <th class="px-6 py-4">Actions</th>
             </tr>
@@ -38,6 +39,12 @@
                 </button>
               </td>
               <td class="px-6 py-4">
+                <button (click)="openImages(room)"
+                        class="cursor-pointer text-xs text-amber-700 font-bold hover:underline">
+                  {{ room.images?.length || 0 }} photo(s)
+                </button>
+              </td>
+              <td class="px-6 py-4">
                 <span [class]="'px-2 py-1 rounded text-[10px] font-bold uppercase ' + getStatusClass(room.status)">
                   {{ getStatusLabel(room.status) }}
                 </span>
@@ -48,7 +55,7 @@
               </td>
             </tr>
             <tr *ngIf="rooms.length === 0">
-              <td colspan="8" class="px-6 py-12 text-center text-stone-400 italic">Aucune chambre enregistrée.</td>
+              <td colspan="9" class="px-6 py-12 text-center text-stone-400 italic">Aucune chambre enregistrée.</td>
             </tr>
           </tbody>
         </table>
@@ -125,7 +132,70 @@
     </div>
   </div>
 
-  
+  <!-- Images Modal -->
+  <div *ngIf="showImages" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+    <div class="bg-white rounded-sm border border-stone-200 shadow-sm w-full max-w-2xl max-h-[90vh] flex flex-col">
+      <div class="flex justify-between items-center px-8 py-5 border-b border-gray-100 shrink-0">
+        <h2 class="text-xl font-bold text-stone-900">Photos — Chambre {{ imageRoom?.room_number }}</h2>
+        <button (click)="showImages = false" class="cursor-pointer text-stone-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+      </div>
+
+      <div class="px-8 py-6 space-y-5 overflow-y-auto">
+        <!-- Existing images grid -->
+        <div *ngIf="imageRoom?.images?.length; else noImages" class="grid grid-cols-3 gap-3">
+          <div *ngFor="let img of imageRoom!.images"
+               class="relative group rounded-sm overflow-hidden border-2"
+               [class.border-amber-500]="img.is_main"
+               [class.border-transparent]="!img.is_main">
+            <img [src]="getImageUrl(img.image_path)" alt="Photo chambre"
+                 class="w-full h-32 object-cover">
+            <span *ngIf="img.is_main"
+                  class="absolute top-1 left-1 bg-amber-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
+              Principale
+            </span>
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity">
+              <button *ngIf="!img.is_main" (click)="setMainImage(img.id)"
+                      title="Définir comme principale"
+                      class="cursor-pointer bg-amber-500 hover:bg-amber-600 text-white rounded p-1.5 text-xs font-bold">
+                ★
+              </button>
+              <button (click)="deleteImage(img.id)"
+                      title="Supprimer"
+                      class="cursor-pointer bg-red-600 hover:bg-red-700 text-white rounded p-1.5 text-xs font-bold">
+                ✕
+              </button>
+            </div>
+          </div>
+        </div>
+        <ng-template #noImages>
+          <p class="text-sm text-stone-400 italic text-center py-4">Aucune photo pour cette chambre.</p>
+        </ng-template>
+
+        <!-- Upload area -->
+        <div class="border-t border-gray-100 pt-4 space-y-3">
+          <label class="block text-xs font-bold text-stone-500 uppercase">Ajouter des photos</label>
+          <input type="file" multiple accept="image/jpeg,image/png,image/webp"
+                 (change)="onFilesSelected($event)"
+                 class="block w-full text-sm text-stone-600 file:cursor-pointer file:mr-3 file:px-4 file:py-2 file:rounded-sm file:border-0 file:bg-stone-100 file:text-stone-700 file:font-bold hover:file:bg-stone-200 transition">
+          <p *ngIf="pendingFiles.length" class="text-xs text-stone-500">{{ pendingFiles.length }} fichier(s) sélectionné(s)</p>
+          <button (click)="uploadImages()" [disabled]="!pendingFiles.length || imageUploading"
+                  class="cursor-pointer px-5 py-2.5 rounded-sm bg-stone-800 text-white font-bold text-sm hover:bg-stone-900 transition disabled:opacity-50">
+            {{ imageUploading ? 'Envoi...' : 'Uploader' }}
+          </button>
+        </div>
+
+        <div *ngIf="imageError" class="text-red-600 text-sm">{{ imageError }}</div>
+
+        <div class="flex justify-end pt-2 border-t border-gray-100">
+          <button (click)="showImages = false"
+                  class="cursor-pointer px-5 py-2.5 rounded-sm border border-gray-300 text-gray-600 font-bold hover:bg-stone-50 transition">
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div *ngIf="showAmenities" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
     <div class="bg-white rounded-sm border border-stone-200 shadow-sm w-full max-w-md">
       <div class="flex justify-between items-center px-8 py-5 border-b border-gray-100">
