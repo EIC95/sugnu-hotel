@@ -1,28 +1,28 @@
-<div class="min-h-screen flex flex-col bg-gray-50">
+<div class="min-h-screen flex flex-col bg-stone-50">
       <app-navbar></app-navbar>
 
       <main class="grow py-12" *ngIf="reservation">
         <div class="max-w-4xl mx-auto px-4">
           <div class="mb-8 flex items-center justify-between">
-            <a routerLink="/client/reservations" class="text-green-800 font-bold flex items-center hover:underline">
+            <a routerLink="/client/reservations" class="text-stone-800 font-bold flex items-center hover:underline">
               ← Retour à mes réservations
             </a>
             <div class="flex space-x-2">
-              <span [class]="'px-4 py-2 rounded-lg text-sm font-bold shadow-sm ' + getStatusClass(reservation.status)">
+              <span [class]="'px-4 py-2 rounded-sm text-sm font-bold shadow-sm ' + getStatusClass(reservation.status)">
                 {{ translateStatus(reservation.status) }}
               </span>
             </div>
           </div>
 
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
-            <div class="bg-green-800 px-8 py-6 text-white flex justify-between items-center">
+          <div class="bg-white rounded-sm border border-stone-200 shadow-sm overflow-hidden mb-8">
+            <div class="bg-stone-800 px-8 py-6 text-white flex justify-between items-center">
               <div>
                 <h1 class="text-2xl font-bold">Réservation #{{ reservation.reservation_number }}</h1>
-                <p class="text-green-100 opacity-80">Effectuée le {{ reservation.created_at | date:'short' }}</p>
+                <p class="text-stone-100 opacity-80">Effectuée le {{ reservation.created_at | date:'short' }}</p>
               </div>
               <div class="text-right">
                 <p class="text-xs uppercase font-bold opacity-70">Prix Total</p>
-                <p class="text-3xl font-bold text-orange-400">{{ reservation.total_price }} FCFA</p>
+                <p class="text-3xl font-bold text-[#d4ba8a]">{{ reservation.total_price }} FCFA</p>
               </div>
             </div>
 
@@ -30,31 +30,31 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 
                 <div>
-                  <h2 class="text-lg font-bold text-green-900 mb-4 border-b pb-2">Détails du séjour</h2>
+                  <h2 class="text-lg font-bold text-stone-900 mb-4 border-b pb-2">Détails du séjour</h2>
                   <div class="space-y-4">
                     <div class="flex justify-between">
-                      <span class="text-gray-500">Chambre</span>
-                      <span class="font-bold text-green-800">{{ reservation.room.room_type.name }} (#{{ reservation.room.room_number }})</span>
+                      <span class="text-stone-500">Chambre</span>
+                      <span class="font-bold text-stone-800">{{ reservation.room.room_type.name }} (#{{ reservation.room.room_number }})</span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="text-gray-500">Arrivée</span>
+                      <span class="text-stone-500">Arrivée</span>
                       <span class="font-bold">{{ reservation.check_in_date }}</span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="text-gray-500">Départ</span>
+                      <span class="text-stone-500">Départ</span>
                       <span class="font-bold">{{ reservation.check_out_date }}</span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="text-gray-500">Voyageurs</span>
+                      <span class="text-stone-500">Voyageurs</span>
                       <span class="font-bold">{{ reservation.number_of_adults }} Adultes, {{ reservation.number_of_children }} Enfants</span>
                     </div>
                   </div>
                 </div>
 
                 
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
-                  <h3 class="font-bold text-green-900 mb-2">Ma Chambre</h3>
-                  <div class="h-48 rounded-lg overflow-hidden mb-4 shadow-sm group relative">
+                <div class="bg-stone-50 p-6 rounded-sm border border-gray-100">
+                  <h3 class="font-bold text-stone-900 mb-2">Ma Chambre</h3>
+                  <div class="h-48 rounded-sm overflow-hidden mb-4 shadow-sm group relative">
                     <img [src]="getMainImageUrl()" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
                       <p class="text-white text-xs font-bold">Chambre #{{ reservation.room.room_number }} - A%tage {{ reservation.room.floor }}</p>
@@ -63,9 +63,9 @@
                   
                   
                   <div *ngIf="reservation.room.amenities?.length">
-                    <h4 class="text-[10px] uppercase font-bold text-gray-400 mb-2 tracking-wider">A%quipements inclus</h4>
+                    <h4 class="text-[10px] uppercase font-bold text-stone-400 mb-2 tracking-wider">A%quipements inclus</h4>
                     <div class="flex flex-wrap gap-2">
-                      <span *ngFor="let am of reservation.room.amenities" class="text-[10px] bg-white border border-green-100 px-2 py-1 rounded-md text-green-700 font-bold flex items-center gap-1">
+                      <span *ngFor="let am of reservation.room.amenities" class="text-[10px] bg-white border border-stone-200 px-2 py-1 rounded-md text-stone-700 font-bold flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
@@ -77,8 +77,8 @@
               </div>
 
               
-              <div class="mt-8 bg-gray-50 p-6 rounded-xl border border-gray-100">
-                  <h3 class="font-bold text-green-900 mb-4">Résumé financier</h3>
+              <div class="mt-8 bg-stone-50 p-6 rounded-sm border border-gray-100">
+                  <h3 class="font-bold text-stone-900 mb-4">Résumé financier</h3>
                   <div class="space-y-3 text-sm">
                     <div class="flex justify-between text-gray-600">
                       <span>Chambre ({{ reservation.room.price_per_night | number }} FCFA x {{ nights }} nuits)</span>
@@ -88,40 +88,40 @@
                       <span>Services additionnels</span>
                       <span class="font-bold">{{ servicesTotal | number }} FCFA</span>
                     </div>
-                    <div class="flex justify-between text-green-600 font-bold pt-2 border-t border-gray-200" *ngIf="reservation.discount_amount > 0">
+                    <div class="flex justify-between text-stone-600 font-bold pt-2 border-t border-gray-200" *ngIf="reservation.discount_amount > 0">
                       <span>Réduction ({{ reservation.promo_code }})</span>
                       <span>- {{ reservation.discount_amount | number }} FCFA</span>
                     </div>
-                    <div class="flex justify-between text-lg font-bold text-green-900 pt-2 border-t border-gray-200">
+                    <div class="flex justify-between text-lg font-bold text-stone-900 pt-2 border-t border-gray-200">
                       <span>Total payA</span>
-                      <span class="text-orange-600">{{ reservation.total_price | number }} FCFA</span>
+                      <span class="text-[#C1A87D]">{{ reservation.total_price | number }} FCFA</span>
                     </div>
                   </div>
                 </div>
 
               
               <div class="mt-8" *ngIf="reservation.services?.length">
-                <h2 class="text-lg font-bold text-green-900 mb-4 border-b pb-2">Services sAclActionnAs</h2>
+                <h2 class="text-lg font-bold text-stone-900 mb-4 border-b pb-2">Services sAclActionnAs</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div *ngFor="let s of reservation.services" class="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-100">
+                  <div *ngFor="let s of reservation.services" class="flex justify-between items-center p-3 bg-stone-50 rounded-sm border border-stone-200">
                     <div>
-                      <p class="font-bold text-green-900">{{ s.name }}</p>
-                      <p class="text-xs text-gray-500">Prix unitaire: {{ s.pivot.price | number }} FCFA</p>
+                      <p class="font-bold text-stone-900">{{ s.name }}</p>
+                      <p class="text-xs text-stone-500">Prix unitaire: {{ s.pivot.price | number }} FCFA</p>
                     </div>
-                    <span class="font-bold text-green-800">{{ s.pivot.price * s.pivot.quantity | number }} FCFA</span>
+                    <span class="font-bold text-stone-800">{{ s.pivot.price * s.pivot.quantity | number }} FCFA</span>
                   </div>
                 </div>
               </div>
 
               <div class="mt-12" *ngIf="reservation.special_requests">
-                <h2 class="text-lg font-bold text-green-900 mb-4 border-b pb-2">Demandes spéciales</h2>
-                <div class="p-4 bg-orange-50 rounded-lg text-gray-700 italic border-l-4 border-orange-400">
+                <h2 class="text-lg font-bold text-stone-900 mb-4 border-b pb-2">Demandes spéciales</h2>
+                <div class="p-4 bg-[#f9f7f3] rounded-sm text-gray-700 italic border-l-4 border-[#d4ba8a]">
                   "{{ reservation.special_requests }}"
                 </div>
               </div>
 
               <div class="mt-12 flex justify-end space-x-4" *ngIf="reservation.status === 'confirmed' || reservation.status === 'pending'">
-                <button (click)="cancel()" class="cursor-pointer px-6 py-2 border-2 border-red-500 text-red-500 rounded-lg font-bold hover:bg-red-50 transition">
+                <button (click)="cancel()" class="cursor-pointer px-6 py-2 border-2 border-red-500 text-red-500 rounded-sm font-bold hover:bg-red-50 transition">
                   Annuler la réservation
                 </button>
               </div>

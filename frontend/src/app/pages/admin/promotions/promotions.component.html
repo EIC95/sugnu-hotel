@@ -1,18 +1,18 @@
-<div class="min-h-screen flex flex-col bg-gray-50">
+<div class="min-h-screen flex flex-col bg-stone-50">
   <app-navbar></app-navbar>
 
   <main class="grow py-12">
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between items-center mb-8">
-        <h1 class="text-3xl font-bold text-green-900">Codes Promotionnels</h1>
-        <button (click)="openAdd()" class="cursor-pointer bg-green-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-900 transition">
+        <h1 class="text-3xl font-bold text-stone-900">Codes Promotionnels</h1>
+        <button (click)="openAdd()" class="cursor-pointer bg-stone-800 text-white px-6 py-2 rounded-sm font-bold hover:bg-stone-900 transition">
           + Nouveau Code
         </button>
       </div>
 
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+      <div class="bg-white rounded-sm border border-stone-200 shadow-sm overflow-hidden">
         <table class="w-full text-left">
-          <thead class="bg-gray-100 text-xs font-bold text-gray-500 uppercase">
+          <thead class="bg-stone-100 text-xs font-bold text-stone-500 uppercase">
             <tr>
               <th class="px-6 py-4">Code</th>
               <th class="px-6 py-4">Description</th>
@@ -23,16 +23,16 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
-            <tr *ngFor="let p of promotions" class="hover:bg-gray-50">
-              <td class="px-6 py-4 font-bold text-orange-500 uppercase tracking-wide">{{ p.code }}</td>
-              <td class="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">{{ p.description || '—' }}</td>
+            <tr *ngFor="let p of promotions" class="hover:bg-stone-50">
+              <td class="px-6 py-4 font-bold text-[#C1A87D] uppercase tracking-wide">{{ p.code }}</td>
+              <td class="px-6 py-4 text-sm text-stone-500 max-w-xs truncate">{{ p.description || '—' }}</td>
               <td class="px-6 py-4 font-bold">{{ p.discount }}{{ p.is_percentage ? '%' : ' FCFA' }}</td>
-              <td class="px-6 py-4 text-sm text-gray-500">
+              <td class="px-6 py-4 text-sm text-stone-500">
                 {{ p.starts_at | date:'dd/MM/yyyy' }} → {{ p.ends_at | date:'dd/MM/yyyy' }}
               </td>
               <td class="px-6 py-4">
                 <button (click)="toggleActive(p)"
-                        [class]="'cursor-pointer px-2 py-1 rounded text-[10px] font-bold uppercase transition ' + (p.is_active ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-red-100 text-red-700 hover:bg-red-200')">
+                        [class]="'cursor-pointer px-2 py-1 rounded text-[10px] font-bold uppercase transition ' + (p.is_active ? 'bg-stone-100 text-stone-700 hover:bg-stone-200' : 'bg-red-100 text-red-700 hover:bg-red-200')">
                   {{ p.is_active ? 'Actif' : 'Inactif' }}
                 </button>
               </td>
@@ -42,7 +42,7 @@
               </td>
             </tr>
             <tr *ngIf="promotions.length === 0">
-              <td colspan="6" class="px-6 py-12 text-center text-gray-400 italic">Aucune promotion enregistrée.</td>
+              <td colspan="6" class="px-6 py-12 text-center text-stone-400 italic">Aucune promotion enregistrée.</td>
             </tr>
           </tbody>
         </table>
@@ -54,75 +54,75 @@
 
   
   <div *ngIf="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg">
+    <div class="bg-white rounded-sm border border-stone-200 shadow-sm w-full max-w-lg">
       <div class="flex justify-between items-center px-8 py-5 border-b border-gray-100">
-        <h2 class="text-xl font-bold text-green-900">{{ editMode ? 'Modifier la promotion' : 'Nouvelle promotion' }}</h2>
-        <button (click)="showModal = false" class="cursor-pointer text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+        <h2 class="text-xl font-bold text-stone-900">{{ editMode ? 'Modifier la promotion' : 'Nouvelle promotion' }}</h2>
+        <button (click)="showModal = false" class="cursor-pointer text-stone-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
       </div>
 
       <form (ngSubmit)="save()" #promoForm="ngForm" class="px-8 py-6 space-y-4">
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Code promo</label>
+            <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Code promo</label>
             <input type="text" [(ngModel)]="formData.code" name="code" required
-                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                   class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
           </div>
           <div>
-            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Réduction</label>
+            <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Réduction</label>
             <input type="number" [(ngModel)]="formData.discount" name="discount" min="1" required
-                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                   class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Description</label>
+          <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Description</label>
           <input type="text" [(ngModel)]="formData.description" name="description"
-                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                 class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
         </div>
 
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Date début</label>
+            <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Date début</label>
             <input type="date" [(ngModel)]="formData.starts_at" name="starts_at" required
-                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                   class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
           </div>
           <div>
-            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Date fin</label>
+            <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Date fin</label>
             <input type="date" [(ngModel)]="formData.ends_at" name="ends_at" required
-                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                   class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Utilisations max</label>
+            <label class="block text-xs font-bold text-stone-500 uppercase mb-1">Utilisations max</label>
             <input type="number" [(ngModel)]="formData.max_uses" name="max_uses" min="1"
                    placeholder="Illimité"
-                   class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+                   class="w-full border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
           </div>
           <div class="flex flex-col justify-end pb-1 space-y-2">
             <label class="flex items-center space-x-2 cursor-pointer">
               <input type="checkbox" [(ngModel)]="formData.is_percentage" name="is_percentage"
-                     class="w-4 h-4 accent-green-700">
+                     class="w-4 h-4 accent-stone-700">
               <span class="text-sm font-medium text-gray-700">En pourcentage (%)</span>
             </label>
             <label class="flex items-center space-x-2 cursor-pointer">
               <input type="checkbox" [(ngModel)]="formData.is_active" name="is_active"
-                     class="w-4 h-4 accent-green-700">
+                     class="w-4 h-4 accent-stone-700">
               <span class="text-sm font-medium text-gray-700">Actif</span>
             </label>
           </div>
         </div>
 
-        <div *ngIf="error" class="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">{{ error }}</div>
+        <div *ngIf="error" class="p-3 bg-red-50 border border-red-200 text-red-700 rounded-sm text-sm">{{ error }}</div>
 
         <div class="flex justify-end space-x-3 pt-2">
           <button type="button" (click)="showModal = false"
-                  class="cursor-pointer px-5 py-2.5 rounded-lg border border-gray-300 text-gray-600 font-bold hover:bg-gray-50 transition">
+                  class="cursor-pointer px-5 py-2.5 rounded-sm border border-gray-300 text-gray-600 font-bold hover:bg-stone-50 transition">
             Annuler
           </button>
           <button type="submit" [disabled]="!promoForm.form.valid || saving"
-                  class="cursor-pointer px-5 py-2.5 rounded-lg bg-green-800 text-white font-bold hover:bg-green-900 transition disabled:opacity-50">
+                  class="cursor-pointer px-5 py-2.5 rounded-sm bg-stone-800 text-white font-bold hover:bg-stone-900 transition disabled:opacity-50">
             {{ saving ? 'Enregistrement...' : (editMode ? 'Modifier' : 'Créer') }}
           </button>
         </div>

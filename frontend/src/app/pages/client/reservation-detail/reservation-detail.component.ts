@@ -55,10 +55,10 @@ export class ReservationDetailComponent implements OnInit {
 
   getStatusClass(status: string): string {
     switch(status) {
-      case 'confirmed': return 'bg-green-100 text-green-700';
-      case 'pending': return 'bg-orange-100 text-orange-700';
+      case 'confirmed': return 'bg-stone-100 text-stone-700';
+      case 'pending': return 'bg-[#f4efe6] text-[#8a7550]';
       case 'cancelled': return 'bg-red-100 text-red-700';
-      default: return 'bg-gray-100 text-gray-700';
+      default: return 'bg-stone-100 text-gray-700';
     }
   }
 

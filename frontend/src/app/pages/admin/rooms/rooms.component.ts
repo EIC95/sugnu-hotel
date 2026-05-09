@@ -150,11 +150,11 @@ export class RoomsComponent implements OnInit {
 
   getStatusClass(status: string): string {
     switch (status) {
-      case 'available':      return 'bg-green-100 text-green-700';
-      case 'occupied':       return 'bg-orange-100 text-orange-700';
+      case 'available':      return 'bg-stone-100 text-stone-700';
+      case 'occupied':       return 'bg-[#f4efe6] text-[#8a7550]';
       case 'maintenance':    return 'bg-red-100 text-red-700';
-      case 'out_of_service': return 'bg-gray-100 text-gray-500';
-      default:               return 'bg-gray-100 text-gray-700';
+      case 'out_of_service': return 'bg-stone-100 text-stone-500';
+      default:               return 'bg-stone-100 text-gray-700';
     }
   }
 

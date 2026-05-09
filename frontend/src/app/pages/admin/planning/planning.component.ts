@@ -33,8 +33,8 @@ export class PlanningComponent implements OnInit {
   statusClasses: Record<string, string> = {
     pending: 'bg-yellow-100 text-yellow-700',
     confirmed: 'bg-blue-100 text-blue-700',
-    checked_in: 'bg-green-100 text-green-700',
-    checked_out: 'bg-gray-100 text-gray-600',
+    checked_in: 'bg-stone-100 text-stone-700',
+    checked_out: 'bg-stone-100 text-gray-600',
     cancelled: 'bg-red-100 text-red-600',
   };
 
@@ -63,7 +63,7 @@ export class PlanningComponent implements OnInit {
   }
 
   getClass(status: string) {
-    return this.statusClasses[status] ?? 'bg-gray-100 text-gray-600';
+    return this.statusClasses[status] ?? 'bg-stone-100 text-gray-600';
   }
 
   checkIn(id: number) {

@@ -1,14 +1,14 @@
-<div class="min-h-screen flex flex-col bg-gray-50">
+<div class="min-h-screen flex flex-col bg-stone-50">
       <app-navbar></app-navbar>
 
       <main class="grow py-12">
         <div class="max-w-7xl mx-auto px-4">
-          <h1 class="text-3xl font-bold text-green-900 mb-8">Toutes les Réservations</h1>
+          <h1 class="text-3xl font-bold text-stone-900 mb-8">Toutes les Réservations</h1>
 
           
-          <div class="bg-white p-4 rounded-xl shadow-sm mb-6 flex flex-wrap gap-4">
-            <input type="text" [(ngModel)]="searchTerm" placeholder="Chercher un client ou #..." class="grow border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
-            <select [(ngModel)]="statusFilter" class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20">
+          <div class="bg-white p-4 rounded-sm shadow-sm mb-6 flex flex-wrap gap-4">
+            <input type="text" [(ngModel)]="searchTerm" placeholder="Chercher un client ou #..." class="grow border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
+            <select [(ngModel)]="statusFilter" class="border border-gray-300 rounded-sm px-3 py-2.5 text-sm focus:outline-none focus:border-stone-700 focus:ring-2 focus:ring-stone-700/20">
               <option value="">Tous les statuts</option>
               <option value="pending">En attente</option>
               <option value="confirmed">Confirmée</option>
@@ -18,10 +18,10 @@
             </select>
           </div>
 
-          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-white rounded-sm border border-stone-200 shadow-sm overflow-hidden">
             <div class="overflow-x-auto">
               <table class="w-full text-left">
-                <thead class="bg-gray-100 text-xs font-bold text-gray-500 uppercase border-b border-gray-200">
+                <thead class="bg-stone-100 text-xs font-bold text-stone-500 uppercase border-b border-gray-200">
                   <tr>
                     <th class="px-6 py-4">Numéro</th>
                     <th class="px-6 py-4">Client</th>
@@ -32,11 +32,11 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
-                  <tr *ngFor="let res of filteredReservations()" class="hover:bg-gray-50 transition">
-                    <td class="px-6 py-4 font-bold text-green-900">{{ res.reservation_number }}</td>
+                  <tr *ngFor="let res of filteredReservations()" class="hover:bg-stone-50 transition">
+                    <td class="px-6 py-4 font-bold text-stone-900">{{ res.reservation_number }}</td>
                     <td class="px-6 py-4">
-                      <div class="font-medium text-gray-900">{{ res.user.name }}</div>
-                      <div class="text-xs text-gray-500">{{ res.user.email }}</div>
+                      <div class="font-medium text-stone-900">{{ res.user.name }}</div>
+                      <div class="text-xs text-stone-500">{{ res.user.email }}</div>
                     </td>
                     <td class="px-6 py-4">#{{ res.room.room_number }} ({{ res.room.room_type.name }})</td>
                     <td class="px-6 py-4 text-sm">
@@ -48,8 +48,8 @@
                       </span>
                     </td>
                     <td class="px-6 py-4 space-x-2">
-                      <button *ngIf="res.status === 'confirmed'" (click)="checkIn(res.id)" class="cursor-pointer text-green-700 bg-green-50 px-2 py-1 rounded font-bold text-xs hover:bg-green-100 transition">Check-In</button>
-                      <button *ngIf="res.status === 'checked_in'" (click)="checkOut(res.id)" class="cursor-pointer text-orange-700 bg-orange-50 px-2 py-1 rounded font-bold text-xs hover:bg-orange-100 transition">Check-Out</button>
+                      <button *ngIf="res.status === 'confirmed'" (click)="checkIn(res.id)" class="cursor-pointer text-stone-700 bg-stone-50 px-2 py-1 rounded font-bold text-xs hover:bg-stone-100 transition">Check-In</button>
+                      <button *ngIf="res.status === 'checked_in'" (click)="checkOut(res.id)" class="cursor-pointer text-[#8a7550] bg-[#f9f7f3] px-2 py-1 rounded font-bold text-xs hover:bg-[#f4efe6] transition">Check-Out</button>
                     </td>
                   </tr>
                 </tbody>
