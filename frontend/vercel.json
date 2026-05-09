@@ -5,16 +5,17 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist/sugnu-hotel"
+        "distDir": "dist/"
       }
     }
   ],
   "routes": [
     {
-      "handle": "filesystem"
+      "src": "^/assets/(.*)",
+      "dest": "/assets/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "^(?!.*\\.(js|css|png|jpg|svg|ico|json)).*$",
       "dest": "/index.html"
     }
   ]
