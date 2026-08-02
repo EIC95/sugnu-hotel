@@ -14,6 +14,13 @@ use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\RoomImageController;
 
 
+Route::match(['get', 'head'], '/health', function () {
+    return response()->json([
+        'status' => 'ok',
+        'timestamp' => now()->toIso8601String(),
+    ]);
+});
+
 Route::get('/active-services', [ServiceController::class, 'activeServices']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/rooms/available', [RoomController::class, 'available']);
