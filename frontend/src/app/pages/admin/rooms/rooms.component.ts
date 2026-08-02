@@ -7,7 +7,6 @@ import { RoomService } from '../../../core/services/room.service';
 import { Room } from '../../../core/models/room.model';
 import { RoomImage } from '../../../core/models/room-image.model';
 import { RoomType } from '../../../core/models/room-type.model';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-rooms',
@@ -38,7 +37,6 @@ export class RoomsComponent implements OnInit {
   imageUploading = false;
   imageError = '';
 
-  private storageBase = environment.apiUrl.replace(/\/api$/, '') + '/storage';
 
   formData = {
     room_number: '',
@@ -166,10 +164,6 @@ export class RoomsComponent implements OnInit {
     this.pendingFiles = [];
     this.imageError = '';
     this.showImages = true;
-  }
-
-  getImageUrl(path: string): string {
-    return `${this.storageBase}/${path}`;
   }
 
   onFilesSelected(event: Event) {

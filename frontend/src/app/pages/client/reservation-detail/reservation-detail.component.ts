@@ -5,7 +5,6 @@ import { NavbarComponent } from '../../../shared/navbar/navbar.component';
 import { FooterComponent } from '../../../shared/footer/footer.component';
 import { ReservationService } from '../../../core/services/reservation.service';
 import { Reservation } from '../../../core/models/reservation.model';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-reservation-detail',
@@ -45,13 +44,11 @@ export class ReservationDetailComponent implements OnInit {
     return this.roomTotal + this.servicesTotal;
   }
 
-  private storageBase = environment.apiUrl.replace(/\/api$/, '') + '/storage';
-
   getMainImageUrl(): string {
     const images = this.reservation?.room?.images;
     if (!images?.length) return 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800';
     const img = images.find((i: any) => i.is_main) ?? images[0];
-    return img?.image_path ? `${this.storageBase}/${img.image_path}` : 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800';
+    return img?.image_url ?? 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800';
   }
 
   getStatusClass(status: string): string {

@@ -147,7 +147,7 @@
                class="relative group rounded-sm overflow-hidden border-2"
                [class.border-amber-500]="img.is_main"
                [class.border-transparent]="!img.is_main">
-            <img [src]="getImageUrl(img.image_path)" alt="Photo chambre"
+            <img [src]="img.image_url" alt="Photo chambre"
                  class="w-full h-32 object-cover">
             <span *ngIf="img.is_main"
                   class="absolute top-1 left-1 bg-amber-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">

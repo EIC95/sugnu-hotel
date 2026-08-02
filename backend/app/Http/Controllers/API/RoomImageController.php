@@ -6,9 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\RoomImage;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RoomImageController extends Controller
 {
+    private function useCloudinary(): bool
+    {
+        return !empty(config('filesystems.disks.cloudinary.url'));
+    }
+
     public function upload(Request $request, $roomId)
     {
         $request->validate([
@@ -20,7 +26,14 @@ class RoomImageController extends Controller
         $uploaded = [];
 
         foreach ($request->file('images') as $image) {
-            $path = $image->store('rooms', 'public');
+            if ($this->useCloudinary()) {
+                $result = cloudinary()->uploadApi()->upload($image->getRealPath(), [
+                    'folder' => 'sugnu-hotel/rooms',
+                ]);
+                $path = $result['secure_url'];
+            } else {
+                $path = $image->store('rooms', 'public');
+            }
 
             $roomImage = RoomImage::create([
                 'room_id'    => $room->id,
@@ -47,7 +60,17 @@ class RoomImageController extends Controller
     public function destroy($roomId, $imageId)
     {
         $image = RoomImage::where('room_id', $roomId)->findOrFail($imageId);
-        \Storage::disk('public')->delete($image->image_path);
+
+        if ($this->useCloudinary()) {
+            // Extraire le public_id depuis l'URL Cloudinary
+            // URL: https://res.cloudinary.com/cloud/image/upload/v123/sugnu-hotel/rooms/file.jpg
+            if (preg_match('/\/upload\/(?:v\d+\/)?(.+?)(?:\.\w+)?$/', $image->image_path, $matches)) {
+                cloudinary()->uploadApi()->destroy($matches[1]);
+            }
+        } else {
+            Storage::disk('public')->delete($image->image_path);
+        }
+
         $image->delete();
 
         return response()->json(['message' => 'Image supprimée']);
