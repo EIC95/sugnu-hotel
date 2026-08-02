@@ -12,14 +12,10 @@ use App\Http\Controllers\API\PromotionController;
 use App\Http\Controllers\API\CheckInOutController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\RoomImageController;
+use App\Http\Controllers\API\HealthController;
 
 
-Route::match(['get', 'head'], '/health', function () {
-    return response()->json([
-        'status' => 'ok',
-        'timestamp' => now()->toIso8601String(),
-    ]);
-});
+Route::match(['get', 'head'], '/health', HealthController::class);
 
 Route::get('/active-services', [ServiceController::class, 'activeServices']);
 Route::post('/login', [AuthController::class, 'login']);
